@@ -1,0 +1,29 @@
+{
+  "name": "node-localbitcoins-api",
+  "version": "1.0.0",
+  "description": "NodeJS Client Library for the Localbitcoins API",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rincorpes/node-localbitcoins-api.git"
+  },
+  "keywords": [
+    "localbitcoins",
+    "api",
+    "btc",
+    "bitcoin"
+  ],
+  "author": "Santiago Rincon (https://github.com/Rincorpes)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rincorpes/node-localbitcoins-api/issues"
+  },
+  "homepage": "https://github.com/Rincorpes/node-localbitcoins-api#readme",
+  "dependencies": {
+    "querystring": "^0.2.0",
+    "request": "^2.88.0"
+  }
+}
