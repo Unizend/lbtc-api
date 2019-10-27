@@ -1,3 +1,7 @@
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules/
+
+# Config File
+# Contains Key and secret for localbitcoins api connection
+config.json
