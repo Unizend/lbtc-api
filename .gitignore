@@ -5,3 +5,7 @@ node_modules/
 # Config File
 # Contains Key and secret for localbitcoins api connection
 config.json
+
+# Tests Directory
+# Here I'm making tests
+tests/

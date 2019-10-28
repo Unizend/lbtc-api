@@ -36,17 +36,23 @@ const getHeaders = (path, params = {}) => {
 	}
 }
 
+const parsePath = (path) => {
+	return '/api/' + path + '/'
+}
+
 // Here's where the magic happends
 const api = {
 	get: async path => {
+		path = parsePath(path)
 		const headers = getHeaders(path)
-		const res = await fetch(ROOT_URL + '/api/' + path + '/', { method: 'GET', headers })
+		const res = await fetch(ROOT_URL + path, { method: 'GET', headers })
 
 		return res.json()
 	},
 	post: async (path, params) => {
+		path = parsePath(path)
 		const headers = getHeaders(path, params)
-		const res = await fetch(ROOT_URL + '/api/' + path + '/', {
+		const res = await fetch(ROOT_URL + path, {
 			method: 'POST',
 			body: querystring.stringify(payload),
 			headers
