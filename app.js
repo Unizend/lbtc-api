@@ -53,8 +53,9 @@ const paths = {
 	COUNTRYCODES: '/api/countrycodes/',
 	CURRENCIES: '/api/currencies/',
 	PLACES: '/api/places/', // Not working yet. TODO: Make it work
-	equation: equation_string => `/api/equation/${equation_string}`, // TODO: review the localbitcoins equation guide
-	MY_ADS_LIST: '/api/ads/'
+	equation: equation_string => `/api/equation/${equation_string}/`, // TODO: review the localbitcoins equation guide
+	MY_ADS_LIST: '/api/ads/',
+	adById: ad_id => `/api/ad-get/${ad_id}/`
 }
 
 // Test using the api method to get the payment methods.
@@ -108,10 +109,19 @@ const getEquation = async (equation_string = null) => {
 
 const getMyAds = async () => {
 	const response = await api.get(paths.MY_ADS_LIST)
-	console.log(response.data)
+	console.log(response)
 }
 
 // getMyAds()
+
+const getAdById = async (ad_id) => {
+	const response = await api.get(
+		paths.adById(ad_id)
+	)
+	console.log(response.data.ad_list)
+}
+
+// getAdById('975638')
 
 // Testing Localbitcoins API Payment Methods
 /*const payment_methods = request('https://localbitcoins.com/api/payment_methods/', function(err, res, data) {
