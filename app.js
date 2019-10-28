@@ -52,8 +52,9 @@ const paths = {
 	countryPaymentMethods: countrycode => `/api/payment_methods/${countrycode}/`,
 	COUNTRYCODES: '/api/countrycodes/',
 	CURRENCIES: '/api/currencies/',
-	PLACES: '/api/places/', // Not working yet.
-	equation: equation_string => `/api/equation/${equation_string}` // Gotta review the localbitcoins equation guide
+	PLACES: '/api/places/', // Not working yet. TODO: Make it work
+	equation: equation_string => `/api/equation/${equation_string}`, // TODO: review the localbitcoins equation guide
+	MY_ADS_LIST: '/api/ads/'
 }
 
 // Test using the api method to get the payment methods.
@@ -69,17 +70,27 @@ const getPaymentMethods = async (countrycode = null) => {
 	console.log(response)
 }
 
+// getPaymentMethods()
+
+// getPaymentMethods('ve')
+
 // Testin countrycodes
 const getCountrycodes = async () => {
 	const response = await api.get(paths.COUNTRYCODES)
 	console.log(response);
 }
 
+// getCountrycodes()
+
 // Testing Currencies
 const getCurrencies = async () => {
 	const response = await api.get(paths.CURRENCIES)
 	console.log(response)
 }
+
+// getCurrencies()
+
+// TODO: getPlaces()
 
 // Testing equations
 const getEquation = async (equation_string = null) => {
@@ -93,7 +104,14 @@ const getEquation = async (equation_string = null) => {
 	console.log(response)
 }
 
-getEquation('btc_in_usd*0.9')
+// getEquation('btc_in_usd*0.9')
+
+const getMyAds = async () => {
+	const response = await api.get(paths.MY_ADS_LIST)
+	console.log(response.data)
+}
+
+// getMyAds()
 
 // Testing Localbitcoins API Payment Methods
 /*const payment_methods = request('https://localbitcoins.com/api/payment_methods/', function(err, res, data) {
