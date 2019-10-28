@@ -66,7 +66,13 @@ const getPaymentMethods = async (countrycode = null) => {
 	console.log(response)
 }
 
-getPaymentMethods('ve')
+// Testin countrycodes
+const getCountrycodes = async () => {
+	const response = await api.get(paths.COUNTRYCODES)
+	console.log(response);
+}
+
+getCountrycodes()
 
 // Testing Localbitcoins API Payment Methods
 /*const payment_methods = request('https://localbitcoins.com/api/payment_methods/', function(err, res, data) {
