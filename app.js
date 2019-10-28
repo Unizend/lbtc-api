@@ -51,7 +51,9 @@ const paths = {
 	PAYMENT_METHODS: '/api/payment_methods/',
 	countryPaymentMethods: countrycode => `/api/payment_methods/${countrycode}/`,
 	COUNTRYCODES: '/api/countrycodes/',
-	CURRENCIES: '/api/currencies/'
+	CURRENCIES: '/api/currencies/',
+	PLACES: '/api/places/', // Not working yet.
+	equation: equation_string => `/api/equation/${equation_string}` // Gotta review the localbitcoins equation guide
 }
 
 // Test using the api method to get the payment methods.
@@ -79,7 +81,19 @@ const getCurrencies = async () => {
 	console.log(response)
 }
 
-getCurrencies()
+// Testing equations
+const getEquation = async (equation_string = null) => {
+	let response = null
+
+	if (equation_string != null) {
+		response = await api.get(paths.equation(equation_string)) 
+	} else {
+		response = 'You need to specify an equation string'
+	}
+	console.log(response)
+}
+
+getEquation('btc_in_usd*0.9')
 
 // Testing Localbitcoins API Payment Methods
 /*const payment_methods = request('https://localbitcoins.com/api/payment_methods/', function(err, res, data) {
