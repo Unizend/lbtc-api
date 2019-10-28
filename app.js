@@ -43,6 +43,16 @@ const api = {
 		const res = await fetch(ROOT_URL + path, { method: 'GET', headers })
 
 		return res.json()
+	},
+	post: async (path, params) => {
+		const headers = getHeaders(path, params)
+		const res = await fetch(ROOT_URL + path, {
+			method: 'POST',
+			body: querystring.stringify(payload),
+			headers
+		})
+
+		return res.json()
 	}
 }
 
@@ -52,10 +62,16 @@ const paths = {
 	countryPaymentMethods: countrycode => `/api/payment_methods/${countrycode}/`,
 	COUNTRYCODES: '/api/countrycodes/',
 	CURRENCIES: '/api/currencies/',
-	PLACES: '/api/places/', // Not working yet. TODO: Make it work
+	PLACES: '/api/places/', // Not working yet (Missing arguments). TODO: Make it work
 	equation: equation_string => `/api/equation/${equation_string}/`, // TODO: review the localbitcoins equation guide
 	MY_ADS_LIST: '/api/ads/',
-	adById: ad_id => `/api/ad-get/${ad_id}/`
+	adById: ad_id => `/api/ad-get/${ad_id}/`,
+	adsListByIds: ads_ids => `/api/ad-get/${ads_ids}/`, // TODO: Make it work
+	updateAd: ad_id => `/api/ad/${ad_id}/`, // TODO
+	createAd: '/api/ad-create/', // TODO
+	updateAdEquation: ad_id => `/api/ad-equation/${ad_id}/`, // TODO
+	removeAd: ad_id => `/api/ad-delate/${ad_id}/` // TODO
+
 }
 
 // Test using the api method to get the payment methods.
