@@ -50,7 +50,8 @@ const api = {
 const paths = {
 	PAYMENT_METHODS: '/api/payment_methods/',
 	countryPaymentMethods: countrycode => `/api/payment_methods/${countrycode}/`,
-	COUNTRYCODES: '/api/countrycodes/'
+	COUNTRYCODES: '/api/countrycodes/',
+	CURRENCIES: '/api/currencies/'
 }
 
 // Test using the api method to get the payment methods.
@@ -72,7 +73,13 @@ const getCountrycodes = async () => {
 	console.log(response);
 }
 
-getCountrycodes()
+// Testing Currencies
+const getCurrencies = async () => {
+	const response = await api.get(paths.CURRENCIES)
+	console.log(response)
+}
+
+getCurrencies()
 
 // Testing Localbitcoins API Payment Methods
 /*const payment_methods = request('https://localbitcoins.com/api/payment_methods/', function(err, res, data) {
