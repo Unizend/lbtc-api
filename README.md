@@ -22,11 +22,72 @@ It should look like this
 
 	{
 		"auth": {
-			"key": "YOUR_HMACK_AUTH_KEY",
+			"key": "YOUR_HMAC_AUTH_KEY",
 			"secret": "YOUR_HMAC_AUTH_SECRET"
 		}
 	}
 
+### Use
+
+Create a `tests` folder which will contain your test files
+
+Require the `lbtcss-api.js` file
+
+	const lbtcs = require('../lbtcs-api.js')
+
+### Features
+
+#### `lbtcs.get`
+
+Makes an API request using the method 'GET'
+
+##### Params
+
+**`path`:** The path to the api
+
+##### Example code
+
+	const lbtcs = require('../lbtcs-api.js')
+
+	// Gets a list of payment methos from Venezuela
+	lbtcs.get('payment_methods/ve').then(res => {
+		console.log(res)
+	})
+
+#### `lbtcs.post`
+
+Makes an API request using the method 'POST'
+
+##### Params
+
+**`path`:** The path to the api
+**`params`:** Params you will use
+
+##### Example code
+
+	const lbtcs = require('../lbtcs-api.js')
+
+	// Immediately expires the current access token.
+	lbtcs.post('logout').then(res => {
+		console.log(res)
+	})
+
+#### `lbtcs.payment_methods.getList()`
+
+Returns a list of valid payment methods. You can also call for payment methods from an specific country
+
+##### Params
+
+**`countrycode`:** Optional. Valid localbitcoins country code to display payment methods for the specified country
+
+##### Example code
+
+	const lbtcs = require('../lbtcs-api.js')
+
+	// Valid payment methods for Colombia
+	lbtcs.payment_methods.getList('co').then(res => {
+		console.log(res)
+	})
 
 ## Contributing
 
