@@ -36,15 +36,17 @@ const getHeaders = (path, params = {}) => {
 }
 
 // Returns the parsed path for Localbitcoins API Auth requirements
-const parsePath = (path) => {
-	return '/api/' + path + '/'
+const parsePath = (path, public_api = false) => {
+	path = (public_api === true) ? '/' + path : '/api/' + path + '/'
+
+	return path
 }
 
 // Here's where the magic happends
 const lbtcs = {
 	// Get Method for Localbitcoins API
-	get: async path => {
-		path = parsePath(path)
+	get: async (path, public_api = false) => {
+		path = parsePath(path, public_api)
 		const headers = getHeaders(path)
 		const res = await fetch(ROOT_URL + path, { method: 'GET', headers })
 
@@ -363,6 +365,15 @@ const lbtcs = {
 			btcAverage: 'bitcoinaverage/ticker-all-currencies',
 			btcChartsTrades: currency => `bitcoincharts/${currency}/trades.json`,
 			btcChartsOrderbook: currency => `bitcoincharts/${currency}/orderbook.json`
+		},
+		buy: {
+			online: async () => {
+				let path = 'buy-bitcoins-online/.json'
+
+				let response = await lbtcs.get(path, true)
+
+				return response
+			}
 		}
 	}
 }
