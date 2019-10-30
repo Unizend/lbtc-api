@@ -342,7 +342,7 @@ const lbtcs = {
 			fees: 'fees'
 		}
 	},
-	public_market_data: {
+	public_api: {
 		paths: {
 			buyWithCash: (location_id, location_slug) => `buy-bitcoins-with-cash/${location_id}/${location_slug}/.json`,
 			sellForCash: (location_id, location_slug) => `sell-bitcoins-for-cash/${location_id}/${location_slug}/.json`,
@@ -366,14 +366,38 @@ const lbtcs = {
 			btcChartsTrades: currency => `bitcoincharts/${currency}/trades.json`,
 			btcChartsOrderbook: currency => `bitcoincharts/${currency}/orderbook.json`
 		},
-		buy: {
-			online: async () => {
-				let path = 'buy-bitcoins-online/.json'
+		buyOnline: async (params = {}) => {
+			let path = 'buy-bitcoins-online/.json'
 
-				let response = await lbtcs.get(path, true)
+			let cPm = (currency, payment_method) => `buy-bitcoins-online/${currency}/${payment_method}/.json`
+			let ccCnPm = (countrycode, country_name, payment_method) => `buy-bitcoins-online/${countrycode}/${country_name}/${payment_method}/.json`
 
-				return response
+			let response = null
+
+			if (params.currency && params.payment_method) {
+				response = await lbtcs.get(cPm(params.currency, params.payment_method), true)
+			} else if (params.countrycode && params.country_name && params.payment_method) {
+				response = await lbtcs.get(ccCnPm(params.countrycode, params.country_name, params.payment_method), true)
+			} else {
+				response = await lbtcs.get(path, true)
 			}
+
+			return response
+		},
+		sellOnline: async (params = {}) => {
+			let path = 'sell-bitcoins-online/.json'
+
+			let c = (currency) => `sell-bitcoins-online/${currency}/.json`
+
+			let response = null
+
+			if (params.currency) {
+				response = await lbtcs.get(c(params.currency), true)
+			} else {
+				response = await lbtcs.get(path, true)
+			}
+
+			return response
 		}
 	}
 }
