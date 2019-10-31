@@ -42,8 +42,7 @@ const parsePath = (path, public_api = false) => {
 	return path
 }
 
-// Here's where the magic happends
-const lbtcs = {
+const api = {
 	// Get Method for Localbitcoins API
 	get: async (path, public_api = false) => {
 		path = parsePath(path, public_api)
@@ -64,82 +63,22 @@ const lbtcs = {
 
 		return res.json()
 	},
-	payment_methods: {	
-		/**
-		 * Returns a list of valid payment methods
-		 * @param countrycode Valid country code
-		 * @returns {*} list of valid payment methods
-		 */
-		getList: async (countrycode = null) => {
-			let response = null
-			let path = 'payment_methods'
-			let setCountrycode = countrycode => path + `/${countrycode}`
+}
 
-			if (countrycode === null) {
-				response = await lbtcs.get(path)
-			} else {
-				response = await lbtcs.get(
-					setCountrycode(countrycode)
-				)
-			}
+const paths = {
+	payment_methods: 'payment_methods',
+	countrycodes: 'countrycodes',
+	currencies: 'currencies',
+	places: 'places', // TODO Looks up places near lat, lon and provides full URLs to buy and sell listings
+	equation: 'equation'
+}
 
-			return response
-		}
-	},
-	countrycodes: {
-		/**
-		 * Get a list of valid countrycodes
-		 * @returns {*} list of valid countrycodes
-		 */
-		getList: async () => {
-			let path = 'countrycodes'
-			let response = await lbtcs.get(path)
-
-			return response
-		}
-	},
-	currencies: {
-		/**
-		 * Returns a list of valid and recognized FIAT currencies
-		 * @returns {*} list of currencies
-		 */
-		getList: async () => {
-			let path = 'currencies'
-			let response = await lbtcs.get(path)
-
-			return response
-		}
-	},
-	places: {
-		paths: {
-			base: 'places'
-		},
-		getInfo: async () => {
-			// TODO
-
-			console.log('Looks up places near lat, lon and provides full URLs to buy and sell listings')
-		}
-	},
-	equation: {
-		/**
-		 * Calculates the current price for BTC with the specified equation
-		 * @param equation_string Valid Equation
-		 * @returns {string} price for BTC
-		 */
-		getPrice: async (equation_string) => {
-			let path = 'equation'
-			let setEquation = equation_string => path +`/${equation_string}`
-			let response = await lbtcs.get(
-				setEquation(equation_string)
-			)
-
-			return response
-		},
-	},
-	ads: {
+// Here's where the magic happends
+const lbtcs = {
+	/*ads: {
 		getMine: async () => {
 			let path = 'ads'
-			let response = await lbtcs.get(path)
+			let response = await api.get(path)
 
 			return response
 		},
@@ -147,7 +86,7 @@ const lbtcs = {
 			let path = 'add-get'
 			let setId = ad_id => path + `/${ad_id}`
 
-			let response = await lbtcs.get(
+			let response = await api.get(
 				setId(ad_id)
 			)
 			return response
@@ -172,7 +111,7 @@ const lbtcs = {
 					break
 			}
 		}
-	},
+	},*/
 	contact: {
 		paths: {
 			feedback: username => `feedback/${username}`, // TODO
@@ -266,7 +205,7 @@ const lbtcs = {
 		getInfo: async (username) => {
 			let path = 'account_info'
 			let setUsername =  username => path + `/${username}`
-			let response = await lbtcs.get(
+			let response = await api.get(
 				setUsername(username)
 			)
 
@@ -375,11 +314,11 @@ const lbtcs = {
 			let response = null
 
 			if (params.currency && params.payment_method) {
-				response = await lbtcs.get(cPm(params.currency, params.payment_method), true)
+				response = await api.get(cPm(params.currency, params.payment_method), true)
 			} else if (params.countrycode && params.country_name && params.payment_method) {
-				response = await lbtcs.get(ccCnPm(params.countrycode, params.country_name, params.payment_method), true)
+				response = await api.get(ccCnPm(params.countrycode, params.country_name, params.payment_method), true)
 			} else {
-				response = await lbtcs.get(path, true)
+				response = await api.get(path, true)
 			}
 
 			return response
@@ -392,12 +331,75 @@ const lbtcs = {
 			let response = null
 
 			if (params.currency) {
-				response = await lbtcs.get(c(params.currency), true)
+				response = await api.get(c(params.currency), true)
 			} else {
-				response = await lbtcs.get(path, true)
+				response = await api.get(path, true)
 			}
 
 			return response
+		}
+	},
+	getPaymentMethodsList: async (countrycode = null) => {
+		let response = null
+		let path = paths.payment_methods
+		let setCountrycode = countrycode => path + `/${countrycode}`
+
+		if (countrycode === null) {
+			response = await api.get(path)
+		} else {
+			response = await api.get(
+				setCountrycode(countrycode)
+			)
+		}
+
+		return response.data.methods
+	},
+	getPaymentMethod: async (payment_method, countrycode = null) => {
+		response = await lbtcs.getPaymentMethodsList(countrycode)
+
+		return response[payment_method]
+	},
+	getCountrycodes: async () => {
+		let path = paths.countrycodes
+		let response = await api.get(path)
+
+		return response.data.cc_list
+	},
+	getCurrencies: async () => {
+		let path = paths.currencies
+		let response = await api.get(path)
+
+		return response.data.currencies
+	},
+	// TODO getPlaces async () => {},
+	getBTCPriceFromEquation: async (equation_string) => {
+		let path = paths.equation
+
+		let setEquation = equation_string => path +`/${equation_string}`
+
+		let response = await api.get(
+			setEquation(equation_string)
+		)
+
+		return response
+	},
+	ads: async (action) => {
+		switch (action) {
+			case 'get':
+				console.log('Get my ads || get ads by id')
+				break
+			case 'update':
+				console.log('Update an advertisement')
+				break
+			case 'create':
+				console.log('Create a new advertisement')
+				break
+			case 'equation':
+				console.log('Update equation of an advertisement')
+				break
+			case 'remove':
+				console.log('Remove an advertisement')
+				break
 		}
 	}
 }
