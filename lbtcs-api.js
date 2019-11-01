@@ -82,7 +82,11 @@ const paths = {
 	account_info: 'account_info',
 	myself: 'myself',
 	dashbord: 'dashbord',
-	notifications: 'notifications'
+	notifications: 'notifications',
+	recent_messages: 'recent_messages',
+	real_name_verifiers: 'real_name_verifiers',
+	pincode: 'pincode',
+	logout: 'logout'
 }
 
 // Here's where the magic happends
@@ -276,50 +280,28 @@ const lbtcs = {
 
 				return path
 			}
-		}
-	},
-	/*account: {
-		paths: {
-			logout: 'logout',
-			notifications: 'notifications',
-			markAsReadNotification: notification_id => `notifications/mark_as_read/${notification_id}`,
-			pincode: 'pincode',
-			realNameVerifiers: username => `real_name_verifiers/${username}`,
-			recentMsjs: 'recent_messages'
 		},
-		logout: async () => {
-			// TODO
+		getRecentMsgs: async () => {
+			let path = paths.recent_messages
 
-			console.log('Immediately expires the current access token')
+			return path
 		},
-		notifications: {
-			list: async () => {
-				// TODO
+		getRealNameVerifiers: async (username) => {
+			let path = paths.real_name_verifiers + `/${username}`
 
-				console.log('Returns a list of notifications')
-			},
-			markAsRead: async (notification_id) => {
-				// TODO
-
-				console.log('Mark a especific notification as read')
-			}
+			return path
 		},
 		pincode: async () => {
-			// TODO
+			let path = paths.pincode
 
-			console.log('Checks the given PIN code against the user\'s currently active PIN code')
+			return path
 		},
-		realNameVerifiers: async (username) => {
-			// TODO
+		logout: async () => {
+			let path = paths.logout
 
-			console.log('Returns a list of real name verifiers of the user')
-		},
-		recentMsjs: async () => {
-			// TODO
-
-			console.log('Returns the 50 latest trade messages')
+			return path
 		}
-	},*/
+	},
 	wallet: {
 		paths: {
 			info: 'wallet',
