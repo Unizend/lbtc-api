@@ -78,7 +78,9 @@ const paths = {
 	ad_equation: 'ad-equation',
 	ad_remove: 'ad-remove',
 	feedback: 'feedback',
-	contact: 'contact_'
+	contact: 'contact_',
+	account_info: 'account_info',
+	myself: 'myself'
 }
 
 // Here's where the magic happends
@@ -228,7 +230,13 @@ const lbtcs = {
 	},
 	account: {
 		getUserInfo: async (username) => {
-			let path = `account_info/${username}`
+			let path = paths.account_info + `/${username}`
+			let response = await api.get(path)
+
+			return response.data
+		},
+		myself: async () => {
+			let path = paths.myself
 			let response = await api.get(path)
 
 			return response.data
@@ -247,15 +255,6 @@ const lbtcs = {
 			pincode: 'pincode',
 			realNameVerifiers: username => `real_name_verifiers/${username}`,
 			recentMsjs: 'recent_messages'
-		},
-		getInfo: async (username) => {
-			let path = 'account_info'
-			let setUsername =  username => path + `/${username}`
-			let response = await api.get(
-				setUsername(username)
-			)
-
-			return response
 		},
 		getDashbord: async () => {
 			// TODO
