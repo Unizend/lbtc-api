@@ -81,7 +81,8 @@ const paths = {
 	contact: 'contact_',
 	account_info: 'account_info',
 	myself: 'myself',
-	dashbord: 'dashbord'
+	dashbord: 'dashbord',
+	notifications: 'notifications'
 }
 
 // Here's where the magic happends
@@ -263,42 +264,28 @@ const lbtcs = {
 
 				return path
 			}
+		},
+		notifications: {
+			getList: async () => {
+				let path = paths.notifications
+
+				return path
+			},
+			markAsRead: async (notification_id) => {
+				let path = paths.notifications + '/mark_as_read/' + notification_id
+
+				return path
+			}
 		}
 	},
 	/*account: {
 		paths: {
-			dashbord: 'dashbord',
-			released_trades: 'dashbord/released',
-			canceled_trades: 'dashbord/canceled',
-			closed_trades: 'dashbord/closed',
 			logout: 'logout',
 			notifications: 'notifications',
 			markAsReadNotification: notification_id => `notifications/mark_as_read/${notification_id}`,
 			pincode: 'pincode',
 			realNameVerifiers: username => `real_name_verifiers/${username}`,
 			recentMsjs: 'recent_messages'
-		},
-		getDashbord: async () => {
-			// TODO
-
-			console.log('Returns open and active trades')
-		},
-		trades: {
-			getReleased: async () => {
-				// TODO
-
-				console.log('Returns released trades')
-			},
-			getCanceled: async () => {
-				// TODO
-
-				console.log('Returns canceled trades')
-			},
-			getClosed: async () => {
-				// TODO
-
-				console.log('Returns closed trades')
-			}
 		},
 		logout: async () => {
 			// TODO
