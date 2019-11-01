@@ -80,7 +80,8 @@ const paths = {
 	feedback: 'feedback',
 	contact: 'contact_',
 	account_info: 'account_info',
-	myself: 'myself'
+	myself: 'myself',
+	dashbord: 'dashbord'
 }
 
 // Here's where the magic happends
@@ -240,6 +241,28 @@ const lbtcs = {
 			let response = await api.get(path)
 
 			return response.data
+		},
+		dashbord: {
+			info: async () => {
+				let path = paths.dashbord
+
+				return path
+			},
+			released: async () => {
+				let path = paths.dashbord + '/released'
+
+				return path
+			},
+			canceled: async () => {
+				let path = paths.dashbord + '/canceled'
+
+				return path
+			},
+			closed: async () => {
+				let path = paths.dashbord + '/closed'
+
+				return path
+			}
 		}
 	},
 	/*account: {
@@ -249,7 +272,6 @@ const lbtcs = {
 			canceled_trades: 'dashbord/canceled',
 			closed_trades: 'dashbord/closed',
 			logout: 'logout',
-			myself: 'myself',
 			notifications: 'notifications',
 			markAsReadNotification: notification_id => `notifications/mark_as_read/${notification_id}`,
 			pincode: 'pincode',
@@ -282,11 +304,6 @@ const lbtcs = {
 			// TODO
 
 			console.log('Immediately expires the current access token')
-		},
-		myself: async () => {
-			// TODO
-
-			console.log('Returns the information of the authenticated user')
 		},
 		notifications: {
 			list: async () => {
