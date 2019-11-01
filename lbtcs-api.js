@@ -335,6 +335,11 @@ const lbtcs = {
 			return path
 		}
 	},
+	getFees: async () => {
+		let path = paths.fees
+
+		return path
+	},
 	public_api: {
 		paths: {
 			buyWithCash: (location_id, location_slug) => `buy-bitcoins-with-cash/${location_id}/${location_slug}/.json`,
