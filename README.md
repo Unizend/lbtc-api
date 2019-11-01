@@ -13,7 +13,7 @@ It is being developed using `node 10.16.3` and `npm 6.9.0`
 
 Go to the folder and exec `nmp install`
 
-You need to create a `config.json` file in the root folder, with your localbitcoins account HMAC Auth key and secret.
+You need to create a `config.json` file in the module root folder, with your localbitcoins account HMAC Auth key and secret.
 
 You can get it [here](https://localbitcoins.com/accounts/api/)
 For more information check the [localbitcoins api documentation](https://localbitcoins.com/api-docs/)
@@ -21,10 +21,10 @@ For more information check the [localbitcoins api documentation](https://localbi
 It should look like this
 
 	{
-		"auth": {
-			"key": "YOUR_HMAC_AUTH_KEY",
-			"secret": "YOUR_HMAC_AUTH_SECRET"
-		}
+	  "auth": {
+	    "key": "YOUR_HMAC_AUTH_KEY",
+	    "secret": "YOUR_HMAC_AUTH_SECRET"
+	  }
 	}
 
 ### Use
@@ -44,13 +44,19 @@ Makes an API request using the method 'GET'
 ##### Params
 
 **`path`:** The path to the api
+**`public_api`** Boolean. False by default. If true it will not add the `/api/` folder before the paht because the localbitcoins public api does not need it.
 
 ##### Example code
 
 	const lbtcs = require('../lbtcs-api.js')
 
-	// Gets a list of payment methos from Venezuela
+	// Returns a list of payment methos from Venezuela
 	lbtcs.get('payment_methods/ve').then(res => {
+		console.log(res)
+	})
+
+	// Using the public api to list buying ads in Colombia
+	lbtcs.get('buy-bitcoins-online/co/colombia/cash-deposit', true).then(res => {
 		console.log(res)
 	})
 
@@ -72,22 +78,82 @@ Makes an API request using the method 'POST'
 		console.log(res)
 	})
 
-#### `lbtcs.payment_methods.getList()`
+#### `lbtcs.getAPIPath()`
 
-Returns a list of valid payment methods. You can also call for payment methods from an specific country
+Returns a list of the paths for api requests
 
-##### Params
+#### `lbtcs.localbitcoins`
 
-**`countrycode`:** Optional. Valid localbitcoins country code to display payment methods for the specified country
+Access localbitcoins public data
 
-##### Example code
+- `lbtcs.localbitcoins.getPaymentMethodsList(coutrycode)`
+- `lbtcs.localbitcoins.getPaymentMethod(payment_method coutrycode)`
+- `lbtcs.localbitcoins.getCountrycodes()`
+- `lbtcs.localbitcoins.getCurrencies()`
+- `lbtcs.localbitcoins.getPlaces()` TODO
+- `lbtcs.localbitcoins.getBTCPriceFromEquation(equation_string)`
+- `lbtcs.localbitcoins.getFees()`
 
-	const lbtcs = require('../lbtcs-api.js')
+#### `lbtcs.ads`
 
-	// Valid payment methods for Colombia
-	lbtcs.payment_methods.getList('co').then(res => {
-		console.log(res)
-	})
+Access your localbitcoins ads
+
+- `lbtcs.ads.get(ad_id)`
+- `lbtcs.ads.update(ad_id)` TODO
+- `lbtcs.ads.updateEquation(ad_id)` TODO
+- `lbtcs.ads.create()` TODO
+- `lbtcs.ads.remove(ad_id)` TODO
+
+#### `lbtcs.ads`
+
+Access localbitcoins trades
+
+- `lbtcs.trades.giveFeedbackTo(username)` TODO
+- `lbtcs.trades.info(contact_id)` TODO
+- `lbtcs.trades.create(ad_id)` TODO
+- `lbtcs.trades.verify(type, contact_id)` TODO
+- `lbtcs.trades.getMsgs(contact_id)` TODO
+- `lbtcs.trades.postMsg(contact_id)` TODO
+- `lbtcs.trades.paid(contact_id)` TODO
+- `lbtcs.trades.releaseBTC(contact_id)` TODO
+- `lbtcs.trades.cancel(contact_id)` TODO
+- `lbtcs.trades.dispute(contact_id)` TODO
+
+#### `lbtcs.account`
+
+Access your localbitcoins account
+
+- `lbtcs.account.getUserInfo(username)`
+- `lbtcs.account.myself()`
+- `lbtcs.account.dashbord`
+  - `lbtcs.account.dashbord.info()` TODO
+  - `lbtcs.account.dashbord.relased()` TODO
+  - `lbtcs.account.dashbord.canceled()` TODO
+  - `lbtcs.account.dashbord.closed()` TODO
+- `lbtcs.account.notifications`
+  - `lbtcs.account.notifications.getList()` TODO
+  - `lbtcs.account.notifications.markAsRead(notification_id)` TODO
+- `lbtcs.account.getRecentMsgs()` TODO
+- `lbtcs.account.getRealNameVerifiers()` TODO
+- `lbtcs.account.pincode()` TODO
+- `lbtcs.account.logout()` TODO
+
+#### `lbtcs.wallet`
+
+Access your localbitcoins wallet
+
+- `lbtcs.wallet.getInfo()` TODO
+- `lbtcs.wallet.getBalance()` TODO
+- `lbtcs.wallet.send()` TODO
+- `lbtcs.wallet.sendPin()` TODO
+- `lbtcs.wallet.getAddr()` TODO
+
+#### `lbtcs.public_api`
+
+Access localbitcoins public api
+
+- `lbtcs.public_api.buyOnline(params)`
+- `lbtcs.public_api.sellOnline(params)`
 
 ## Contributing
 

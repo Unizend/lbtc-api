@@ -97,49 +97,72 @@ const paths = {
 
 // Here's where the magic happends
 const lbtcs = {
-	getPaymentMethodsList: async (countrycode = null) => {
-		let response = null
-		let path = paths.payment_methods
-		let setCountrycode = countrycode => path + `/${countrycode}`
+	get: async (path, public_api = false) => {
+		return api.get(path, public_api)
+	},
+	post: async (path, params) => {
+		return api.post(path, params)
+	},
+	getAPIPaths: () => {
+		return paths
+	},
+	parsePath: (path, public_api = false) => {
+		return parsePath(path, public_api)
+	},
+	localbitcoins: {
+		getPaymentMethodsList: async (countrycode = null) => {
+			let response = null
+			let path = paths.payment_methods
+			let setCountrycode = countrycode => path + `/${countrycode}`
 
-		if (countrycode === null) {
-			response = await api.get(path)
-		} else {
-			response = await api.get(
-				setCountrycode(countrycode)
+			if (countrycode === null) {
+				response = await api.get(path)
+			} else {
+				response = await api.get(
+					setCountrycode(countrycode)
+				)
+			}
+
+			return response.data.methods
+		},
+		getPaymentMethod: async (payment_method, countrycode = null) => {
+			response = await lbtcs.localbitcoins.getPaymentMethodsList(countrycode)
+
+			return response[payment_method]
+		},
+		getCountrycodes: async () => {
+			let path = paths.countrycodes
+			let response = await api.get(path)
+
+			return response.data.cc_list
+		},
+		getCurrencies: async () => {
+			let path = paths.currencies
+			let response = await api.get(path)
+
+			return response.data.currencies
+		},
+		getPlaces: async () => {
+			let path = paths.places
+
+			return path
+		},
+		getBTCPriceFromEquation: async (equation_string) => {
+			let path = paths.equation
+
+			let setEquation = equation_string => path +`/${equation_string}`
+
+			let response = await api.get(
+				setEquation(equation_string)
 			)
+
+			return response
+		},
+		getFees: async () => {
+			let path = paths.fees
+
+			return path
 		}
-
-		return response.data.methods
-	},
-	getPaymentMethod: async (payment_method, countrycode = null) => {
-		response = await lbtcs.getPaymentMethodsList(countrycode)
-
-		return response[payment_method]
-	},
-	getCountrycodes: async () => {
-		let path = paths.countrycodes
-		let response = await api.get(path)
-
-		return response.data.cc_list
-	},
-	getCurrencies: async () => {
-		let path = paths.currencies
-		let response = await api.get(path)
-
-		return response.data.currencies
-	},
-	// TODO getPlaces async () => {},
-	getBTCPriceFromEquation: async (equation_string) => {
-		let path = paths.equation
-
-		let setEquation = equation_string => path +`/${equation_string}`
-
-		let response = await api.get(
-			setEquation(equation_string)
-		)
-
-		return response
 	},
 	ads: {
 		setId: (path, ad_id) => path + `/${ad_id}`,
@@ -334,11 +357,6 @@ const lbtcs = {
 
 			return path
 		}
-	},
-	getFees: async () => {
-		let path = paths.fees
-
-		return path
 	},
 	public_api: {
 		paths: {
