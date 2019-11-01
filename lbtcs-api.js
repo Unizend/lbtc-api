@@ -70,122 +70,160 @@ const paths = {
 	countrycodes: 'countrycodes',
 	currencies: 'currencies',
 	places: 'places', // TODO Looks up places near lat, lon and provides full URLs to buy and sell listings
-	equation: 'equation'
+	equation: 'equation',
+	ads: 'ads',
+	ad_get: 'ad-get',
+	ad_update: 'ad-update',
+	ad_create: 'ad-create',
+	ad_equation: 'ad-equation',
+	ad_remove: 'ad-remove',
+	feedback: 'feedback',
+	contact: 'contact_'
 }
 
 // Here's where the magic happends
 const lbtcs = {
-	/*ads: {
-		getMine: async () => {
-			let path = 'ads'
+	getPaymentMethodsList: async (countrycode = null) => {
+		let response = null
+		let path = paths.payment_methods
+		let setCountrycode = countrycode => path + `/${countrycode}`
+
+		if (countrycode === null) {
+			response = await api.get(path)
+		} else {
+			response = await api.get(
+				setCountrycode(countrycode)
+			)
+		}
+
+		return response.data.methods
+	},
+	getPaymentMethod: async (payment_method, countrycode = null) => {
+		response = await lbtcs.getPaymentMethodsList(countrycode)
+
+		return response[payment_method]
+	},
+	getCountrycodes: async () => {
+		let path = paths.countrycodes
+		let response = await api.get(path)
+
+		return response.data.cc_list
+	},
+	getCurrencies: async () => {
+		let path = paths.currencies
+		let response = await api.get(path)
+
+		return response.data.currencies
+	},
+	// TODO getPlaces async () => {},
+	getBTCPriceFromEquation: async (equation_string) => {
+		let path = paths.equation
+
+		let setEquation = equation_string => path +`/${equation_string}`
+
+		let response = await api.get(
+			setEquation(equation_string)
+		)
+
+		return response
+	},
+	ads: {
+		setId: (path, ad_id) => path + `/${ad_id}`,
+		get: async (ad_id = null) => {
+			let path = (ad_id == null) ? paths.ads : lbtcs.ads.setId(paths.ad_get, ad_id)
+
 			let response = await api.get(path)
 
-			return response
+			return response.data.ad_list
 		},
-		getById: async (ad_id) => {
-			let path = 'add-get'
-			let setId = ad_id => path + `/${ad_id}`
+		update: async (ad_id) => {
+			let path = lbtcs.ads.setId(paths.ad_update, ad_id)
 
-			let response = await api.get(
-				setId(ad_id)
-			)
-			return response
+			console.log('Update an advertisement')
+
+			return path
 		},
-		action: async (type, ad_id = null) => {
-			let suffix = (type === 'update') ? '' : '-' + type
-			let path = 'ad' + suffix
-			let setId = ad_id =>  `ad/${ad_id}`
+		create: async () => {
+			let path = paths.ad_create
 
-			switch (type) {
-				case 'update':
-					console.log('Update an advertisement')
-					break
-				case 'create':
-					console.log('Create a new advertisement')
-					break
-				case 'equation':
-					console.log('Update equation of an advertisement')
-					break
-				case 'remove':
-					console.log('Remove an advertisement')
-					break
-			}
+			console.log('Create a new advertisement')
+
+			return path
+		},
+		updateEquation: async (ad_id) => {
+			let path = lbtcs.ads.setId(paths.ad_equation, ad_id)
+
+			console.log('Update equation of an advertisement')
+
+			return path
+		},
+		remove: async (ad_id) => {
+			let path = lbtcs.ads.setId(paths.ad_remove, ad_id)
+
+			console.log('Remove an advertisement')
+
+			return path
 		}
-	},*/
-	contact: {
-		paths: {
-			feedback: username => `feedback/${username}`, // TODO
-			release: contact_id => `contact_release/${contact_id}`,
-			releasePin: contact_id => `contact_release_pin/${contact_id}`,
-			markAsPaid: contact_id => `contact_mark_as_paid/${contact_id}`,
-			msjs: contact_id => `contact_messages/${contact_id}`,
-			postMsj: contact_id => `contact_message_post/${contact_id}`,
-			dispute: contact_id => `contact_dispute/${contact_id}`,
-			cancel: contact_id => `contact_cancel/${contact_id}`,
-			realNameConfirmation: contact_id => `contact_mark_realname/${contact_id}`,
-			identifiedPartner: contact_id => `contact_mark_identified/${contact_id}`,
-			startTrade: ad_id => `contact_create/${ad_id}`,
-			tradeInfo: contact_id => `contact_info/${contact_id}`,
-			my_trades_info: 'contact_info'
-		},
-		feedbackTo: async (username) => {
-			// TODO
+	},
+	trades: {
+		setPath: (path, value) => path + `/${value}`,
+		giveFeedbackTo: async (username) => {
+			let path = lbtcs.trades.setPath(paths.feedback, username)
 
 			console.log('Gives feedback to a user')
+
+			return path
 		},
-		releaceBTC: async (contact_id, pin = false) => {
-			// TODO
-
-			console.log('Release BTC. Pin: Optional')
-		},
-		markAsPaid: async (contact_id) => {
-			// TODO
-
-			console.log('mark a trade as paid')
-		},
-		chat: {
-			getMessages: async (contact_id) => {
-				// TODO
-
-				console.log('Returns all chat messages from an specific contact id')
-			},
-			postMessage: async (contact_id) => {
-				// TODO
-
-				console.log('Post a message to a specific contact id')
-			}
-		},
-		dispute: async (contact_id) => {
-			// TODO
-
-			console.log('Starts a dispute on a contact id')
-		},
-		cancel: async (contact_id) => {
-			// TODO
-
-			console.log('Cancel a trade')
-		},
-		mark: {
-			realname: async (contact_id) => {
-				// TODO
-
-				console.log('Mark realname confirmation')
-			},
-			identified: async (contact_id) => {
-				// TODO
-
-				console.log('Mark verification of trade partner as confirmed')
-			}
-		},
-		create: async (ad_id) => {
-			// TODO
-
-			console.log('Start a trade from advertisement')
-		},
-		info: async (contact_id) => {
-			// TODO
+		info: async (contact_id = null) => {
+			let base_path = paths.contact + 'info'
+			let path = (contact_id === null) ? base_path : lbtcs.trades.setPath(base_path, contact_id)
 
 			console.log('Returns informations about a single trade id')
+
+			return path
+		},
+		create: async (ad_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'create', ad_id)
+
+			console.log('Start a trade from advertisement')
+
+			return path
+		},
+		verify: async (type, contact_id) => {
+			let base_path = paths.contact + 'mark_' + type
+			let path = lbtcs.trades.setPath(base_path, contact_id)
+
+			return path
+		},
+		getMsgs: async (contact_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'messages', contact_id)
+
+			return path
+		},
+		postMsg: async (contact_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'message_post', contact_id)
+
+			return path
+		},
+		paid: async (contact_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'mark_as_paid', contact_id)
+
+			return path
+		},
+		releaseBTC: async (contact_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'release', contact_id)
+
+			return path
+		},
+		cancel: async (contact_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'cancel', contact_id)
+
+			return path
+		},
+		dispute: async (contact_id) => {
+			let path = lbtcs.trades.setPath(paths.contact + 'dispute', contact_id)
+
+			return path
 		}
 	},
 	account: {
@@ -337,69 +375,6 @@ const lbtcs = {
 			}
 
 			return response
-		}
-	},
-	getPaymentMethodsList: async (countrycode = null) => {
-		let response = null
-		let path = paths.payment_methods
-		let setCountrycode = countrycode => path + `/${countrycode}`
-
-		if (countrycode === null) {
-			response = await api.get(path)
-		} else {
-			response = await api.get(
-				setCountrycode(countrycode)
-			)
-		}
-
-		return response.data.methods
-	},
-	getPaymentMethod: async (payment_method, countrycode = null) => {
-		response = await lbtcs.getPaymentMethodsList(countrycode)
-
-		return response[payment_method]
-	},
-	getCountrycodes: async () => {
-		let path = paths.countrycodes
-		let response = await api.get(path)
-
-		return response.data.cc_list
-	},
-	getCurrencies: async () => {
-		let path = paths.currencies
-		let response = await api.get(path)
-
-		return response.data.currencies
-	},
-	// TODO getPlaces async () => {},
-	getBTCPriceFromEquation: async (equation_string) => {
-		let path = paths.equation
-
-		let setEquation = equation_string => path +`/${equation_string}`
-
-		let response = await api.get(
-			setEquation(equation_string)
-		)
-
-		return response
-	},
-	ads: async (action) => {
-		switch (action) {
-			case 'get':
-				console.log('Get my ads || get ads by id')
-				break
-			case 'update':
-				console.log('Update an advertisement')
-				break
-			case 'create':
-				console.log('Create a new advertisement')
-				break
-			case 'equation':
-				console.log('Update equation of an advertisement')
-				break
-			case 'remove':
-				console.log('Remove an advertisement')
-				break
 		}
 	}
 }
