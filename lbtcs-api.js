@@ -86,7 +86,13 @@ const paths = {
 	recent_messages: 'recent_messages',
 	real_name_verifiers: 'real_name_verifiers',
 	pincode: 'pincode',
-	logout: 'logout'
+	logout: 'logout',
+	wallet_info: 'wallet',
+	wallet_balance: 'wallet-balance',
+	wallet_send: 'wallet-send',
+	wallet_send_pin: 'wallet-send-pin',
+	wallet_addr: 'wallet-addr',
+	fees: 'fees'
 }
 
 // Here's where the magic happends
@@ -303,13 +309,30 @@ const lbtcs = {
 		}
 	},
 	wallet: {
-		paths: {
-			info: 'wallet',
-			balance: 'wallet-balance',
-			send: 'wallet-send',
-			send_pin: 'wallet-send-pin',
-			addr: 'wallet-addr',
-			fees: 'fees'
+		getInfo: async () => {
+			let path = paths.wallet_info
+
+			return path
+		},
+		getBalance: async () => {
+			let path = paths.wallet_balance
+
+			return path
+		},
+		send: async () => {
+			let path = paths.wallet_send
+
+			return path
+		},
+		sendPin: async () => {
+			let path = paths.wallet_send_pin
+
+			return path
+		},
+		getAddr: async () => {
+			let path = paths.wallet_addr
+
+			return path
 		}
 	},
 	public_api: {
