@@ -227,6 +227,14 @@ const lbtcs = {
 		}
 	},
 	account: {
+		getUserInfo: async (username) => {
+			let path = `account_info/${username}`
+			let response = await api.get(path)
+
+			return response.data
+		}
+	},
+	/*account: {
 		paths: {
 			dashbord: 'dashbord',
 			released_trades: 'dashbord/released',
@@ -308,7 +316,7 @@ const lbtcs = {
 
 			console.log('Returns the 50 latest trade messages')
 		}
-	},
+	},*/
 	wallet: {
 		paths: {
 			info: 'wallet',
