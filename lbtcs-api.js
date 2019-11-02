@@ -416,6 +416,16 @@ const lbtcs = {
 			price = (best_ad) ? best_ad.temp_price : null
 
 			return price
+		},
+		calcBTCAmount: (amount, price) => {
+			let total = amount / price
+
+			return total.toFixed(8)
+		},
+		calcFIATAmount: (btc, price) => {
+			let total = btc * price
+
+			return total.toFixed(2)
 		}
 	}
 }
