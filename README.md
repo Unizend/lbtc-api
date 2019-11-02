@@ -152,8 +152,9 @@ Access your localbitcoins wallet
 
 Access localbitcoins public api
 
-- `lbtcs.public_api.buyOnline(params)`
-- `lbtcs.public_api.sellOnline(params)`
+- `lbtcs.public_api.adsList(action, countrycode, country_name, payment_method, page)`
+- `lbtcs.public_api.getBestAd(ads, min_amount, currency)`
+- `lbtcs.public_api.getPrice(options)`
 
 ## Contributing
 

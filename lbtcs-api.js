@@ -46,8 +46,10 @@ const api = {
 	// Get Method for Localbitcoins API
 	get: async (path, public_api = false) => {
 		path = parsePath(path, public_api)
-		const headers = getHeaders(path)
+		const headers = getHeaders(path, {}, true)
 		const res = await fetch(ROOT_URL + path, { method: 'GET', headers })
+
+		console.log('Request to ' + ROOT_URL + path)
 
 		return res.json()
 	},
@@ -60,6 +62,8 @@ const api = {
 			body: querystring.stringify(payload),
 			headers
 		})
+
+		console.log('Request to ' + ROOT_URL + path)
 
 		return res.json()
 	},
@@ -359,61 +363,59 @@ const lbtcs = {
 		}
 	},
 	public_api: {
-		paths: {
-			buyWithCash: (location_id, location_slug) => `buy-bitcoins-with-cash/${location_id}/${location_slug}/.json`,
-			sellForCash: (location_id, location_slug) => `sell-bitcoins-for-cash/${location_id}/${location_slug}/.json`,
-			buyOnline: {
-				ccCnPm: (countrycode, country_name, payment_method) => `buy-bitcoins-online/${countrycode}/${country_name}/${payment_method}/.json`,
-				ccCn: (countrycode, country_name) => `buy-bitcoins-online/${countrycode}/${country_name}/.json`,
-				cPm: (currency, payment_method) => `buy-bitcoins-online/${currency}/${payment_method}/.json`,
-				c: (currency) => `buy-bitcoins-online/${currency}/.json`,
-				pm: (payment_method) => `buy-bitcoins-online/${payment_method}/.json`,
-				all: 'buy-bitcoins-online/.json',
-			},
-			sellOnline: {
-				ccCnPm: (countrycode, country_name, payment_method) => `sell-bitcoins-online/${countrycode}/${country_name}/${payment_method}/.json`,
-				ccCn: (countrycode, country_name) => `sell-bitcoins-online/${countrycode}/${country_name}/.json`,
-				cPm: (currency, payment_method) => `sell-bitcoins-online/${currency}/${payment_method}/.json`,
-				c: (currency) => `sell-bitcoins-online/${currency}/.json`,
-				pm: (payment_method) => `sell-bitcoins-online/${payment_method}/.json`,
-				all: 'sell-bitcoins-online/.json',
-			},
-			btcAverage: 'bitcoinaverage/ticker-all-currencies',
-			btcChartsTrades: currency => `bitcoincharts/${currency}/trades.json`,
-			btcChartsOrderbook: currency => `bitcoincharts/${currency}/orderbook.json`
-		},
-		buyOnline: async (params = {}) => {
-			let path = 'buy-bitcoins-online/.json'
+		adsList: async (action, countrycode, country_name, payment_method, page) => {
+			let prefix = null
 
-			let cPm = (currency, payment_method) => `buy-bitcoins-online/${currency}/${payment_method}/.json`
-			let ccCnPm = (countrycode, country_name, payment_method) => `buy-bitcoins-online/${countrycode}/${country_name}/${payment_method}/.json`
-
-			let response = null
-
-			if (params.currency && params.payment_method) {
-				response = await api.get(cPm(params.currency, params.payment_method), true)
-			} else if (params.countrycode && params.country_name && params.payment_method) {
-				response = await api.get(ccCnPm(params.countrycode, params.country_name, params.payment_method), true)
-			} else {
-				response = await api.get(path, true)
+			switch (action) {
+				case 'buying':
+					prefix = 'buy-'
+					break
+				case 'selling':
+					prefix = 'sell-'
+					break
 			}
 
-			return response
+			let base_path = prefix + 'bitcoins-online'
+			let suffix = (page > 1) ? `.json?page=${page}` : '.json'
+
+			let path = (payment_method) ? `${base_path}/${countrycode}/${country_name}/${payment_method}/${suffix}` : `${base_path}/${countrycode}/${country_name}/${suffix}`
+
+			let response = await api.get(path, true)
+
+			return response.data.ad_list
 		},
-		sellOnline: async (params = {}) => {
-			let path = 'sell-bitcoins-online/.json'
+		getBestAd: (ads, min_amount, currency) => {
+			let best_ad
 
-			let c = (currency) => `sell-bitcoins-online/${currency}/.json`
-
-			let response = null
-
-			if (params.currency) {
-				response = await api.get(c(params.currency), true)
-			} else {
-				response = await api.get(path, true)
+			for (i = 0; i < ads.length; i++) {
+				if (ads[i].data.limit_to_fiat_amounts === '' || ads[i].data.limit_to_fiat_amounts === null) {
+					if (parseInt(ads[i].data.min_amount) <= min_amount || parseInt(ads[i].data.min_amount) === null) {
+						if (currency) {
+							if (ads[i].data.currency === currency) {
+								best_ad = ads[i].data
+								break
+							}
+						} else {
+							best_ad = ads[i].data
+							break
+						}
+					}
+				} else {
+					best_ad = null
+				}
 			}
 
-			return response
+			return best_ad
+		},
+		getPrice: async options => {
+			let best_ad, ads, price
+
+			ads = await lbtcs.public_api.adsList(options.action, options.countrycode, options.country_name, options.payment_method, options.page)
+			best_ad = await lbtcs.public_api.getBestAd(ads, options.min_amount, options.currency)
+
+			price = (best_ad) ? best_ad.temp_price : null
+
+			return price
 		}
 	}
 }
