@@ -1,14 +1,14 @@
 {
-  "name": "node-localbitcoins-api",
+  "name": "unizend-localbtc",
   "version": "1.0.0",
   "description": "NodeJS Client Library for the Localbitcoins API",
-  "main": "app.js",
+  "main": "unizend-localbtc.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Rincorpes/node-localbitcoins-api.git"
+    "url": "git+https://github.com/Rincorpes/unizend-localbtc.git"
   },
   "keywords": [
     "localbitcoins",
@@ -19,9 +19,9 @@
   "author": "Santiago Rincon (https://github.com/Rincorpes)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Rincorpes/node-localbitcoins-api/issues"
+    "url": "https://github.com/Rincorpes/unizend-localbtc/issues"
   },
-  "homepage": "https://github.com/Rincorpes/node-localbitcoins-api#readme",
+  "homepage": "https://github.com/Rincorpes/unizend-localbtc#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
     "node-fetch": "^2.6.0",

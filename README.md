@@ -1,4 +1,4 @@
-# uz-localbitcoins-api
+# unizend-localbtc
 
 Unizend's Node.js Client Library for the LocalBitcoins API
 
@@ -6,28 +6,25 @@ Unizend's Node.js Client Library for the LocalBitcoins API
 
 Unizend's Node.js Localbitcoins API Client Library has been build to help you access to the localbitcoins API from your Node.js project.
 
-It provides a series of methods that hopefully will ease your development with the Localbitcoins API with Node.js.
-
-### Clone or download.
-
-By downloading you will get a copy of this repository on your local machine
-It is being developed using `node 10.16.3` and `npm 6.9.0`
+It provides a series of methods that hopefully will ease your development with the Localbitcoins API using Node.js.
 
 ### Install
 
-Go to the folder and exec `nmp install`
+Go to yourn project folder and exec  the following command
+
+    npm i unizend-localbtc
+
+### Use
 
 All you will need is your HMAC Auth key and secret wich you can get from [here](https://localbitcoins.com/accounts/api/)
 
 For more information check the [Localbitcoins API Documentation](https://localbitcoins.com/api-docs/)
 
-### Use
-
-Require the library:
+**Require the library:**
 
     const uzLBTCsApi = require('./uz-localbitcoins-api')
 
-Call the `init()` method:
+**Call the `init()` method:**
 
     uzLBTCsApi.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
 

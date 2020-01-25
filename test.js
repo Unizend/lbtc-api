@@ -1,4 +1,4 @@
-const uzLBTCsApi = require('./uz-localbitcoins-api')
+const uzLBTCsApi = require('./unizend-localbtc')
 
 require('dotenv').config()
 
