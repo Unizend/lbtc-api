@@ -4,70 +4,70 @@ const querystring = require('querystring')
 const fetch = require('node-fetch')
 const crypto = require('crypto')
 
-const UzLBTCsClient = {}
+const UzLBTCsApi = {}
 
-UzLBTCsClient.init = (key, secret) => {
-	UzLBTCsClient.key = key
-	UzLBTCsClient.secret = secret
-	UzLBTCsClient.rootUrl = 'https://localbitcoins.com'
-	UzLBTCsClient.defaulHeaders = {
+UzLBTCsApi.init = (key, secret) => {
+	UzLBTCsApi.key = key
+	UzLBTCsApi.secret = secret
+	UzLBTCsApi.rootUrl = 'https://localbitcoins.com'
+	UzLBTCsApi.defaulHeaders = {
 		'Content-Type': 'application/x-www-form-urlencoded',
-		'Apiauth-Key': UzLBTCsClient.key
+		'Apiauth-Key': UzLBTCsApi.key
 	}
 }
 
-UzLBTCsClient.parsePath = (path, publicApi = false) => {
+UzLBTCsApi.parsePath = (path, publicApi = false) => {
 	path = (publicApi === true) ? '/' + path : '/api/' + path + '/'
 
 	return path
 }
 
-UzLBTCsClient.getMessageSignature = (path, params, nonce) => {
+UzLBTCsApi.getMessageSignature = (path, params, nonce) => {
 	const postParameters = querystring.stringify(params)
-	const message = nonce + UzLBTCsClient.key + path + postParameters
+	const message = nonce + UzLBTCsApi.key + path + postParameters
 
 	return crypto
-		.createHmac('sha256', UzLBTCsClient.secret)
+		.createHmac('sha256', UzLBTCsApi.secret)
 		.update(message)
 		.digest('hex')
 		.toUpperCase()
 }
 
-UzLBTCsClient.getHeaders = (path, params = {}) => {
+UzLBTCsApi.getHeaders = (path, params = {}) => {
 	let nonce = new Date() * 1000
-	let signature = UzLBTCsClient.getMessageSignature(path, params, nonce)
+	let signature = UzLBTCsApi.getMessageSignature(path, params, nonce)
 
 	return {
-		...UzLBTCsClient.defaulHeaders,
+		...UzLBTCsApi.defaulHeaders,
 		...{ 'Apiauth-Nonce': nonce, 'Apiauth-Signature': signature }
 	}
 }
 
-UzLBTCsClient.get = async (path, publicApi = false) => {
-	path = UzLBTCsClient.parsePath(path, publicApi)
-	const headers = UzLBTCsClient.getHeaders(path, {})
-	const res = await fetch(UzLBTCsClient.rootUrl + path, { method: 'GET', headers })
+UzLBTCsApi.get = async (path, publicApi = false) => {
+	path = UzLBTCsApi.parsePath(path, publicApi)
+	const headers = UzLBTCsApi.getHeaders(path, {})
+	const res = await fetch(UzLBTCsApi.rootUrl + path, { method: 'GET', headers })
 
-	console.log('Request to ' + UzLBTCsClient.rootUrl + path)
+	console.log('Request to ' + UzLBTCsApi.rootUrl + path)
 
 	return res.json()
 }
 
-UzLBTCsClient.post = async (path, params) => {
-	path = UzLBTCsClient.parsePath(path)
-	const headers = UzLBTCsClient.getHeaders(path, params)
-	const res = await fetch(UzLBTCsClient.rootUrl + path, {
+UzLBTCsApi.post = async (path, params) => {
+	path = UzLBTCsApi.parsePath(path)
+	const headers = UzLBTCsApi.getHeaders(path, params)
+	const res = await fetch(UzLBTCsApi.rootUrl + path, {
 		method: 'POST',
 		body: querystring.stringify(payload),
 		headers
 	})
 
-	console.log('Request to ' + UzLBTCsClient.rootUrl + path)
+	console.log('Request to ' + UzLBTCsApi.rootUrl + path)
 
 	return res.json()
 },
 
-UzLBTCsClient.apiPaths = {
+UzLBTCsApi.apiPaths = {
 	paymentMethods: 'payment_methods',
 	countryCodes: 'countrycodes',
 	currencies: 'currencies',
@@ -100,17 +100,17 @@ UzLBTCsClient.apiPaths = {
 /**
  * Localbitcoins public data
  */
-UzLBTCsClient.localbitcoins = {
+UzLBTCsApi.localbitcoins = {
 	getPaymentMethodsList: async (countryCode = null) => {
 		let response = null
-		let path = UzLBTCsClient.apiUzLBTCsClient.apiPaths.paymentMethods
+		let path = UzLBTCsApi.apiUzLBTCsApi.apiPaths.paymentMethods
 
 		let setCountryCode = countryCode => path + `/${countryCode}`
 
 		if (countryCode === null) {
-			response = await UzLBTCsClient.get(path)
+			response = await UzLBTCsApi.get(path)
 		} else {
-			response = await UzLBTCsClient.get(
+			response = await UzLBTCsApi.get(
 				setCountryCode(countryCode)
 			)
 		}
@@ -118,62 +118,62 @@ UzLBTCsClient.localbitcoins = {
 		return response.data.methods
 	},
 	getPaymentMethod: async (paymentMethod, countryCode = null) => {
-		let response = await UzLBTCsClient.localbitcoins.getPaymentMethodsList(countryCode)
+		let response = await UzLBTCsApi.localbitcoins.getPaymentMethodsList(countryCode)
 
 		return response[paymentMethod]
 	},
 	getCountryCodes: async () => {
-		let path = UzLBTCsClient.apiUzLBTCsClient.apiPaths.countryCodes
-		let response = await UzLBTCsClient.get(path)
+		let path = UzLBTCsApi.apiUzLBTCsApi.apiPaths.countryCodes
+		let response = await UzLBTCsApi.get(path)
 
 		return response.data.cc_list
 	},
 	// TODO Add the possibility to get an specific currency
 	getCurrencies: async () => {
-		let path = UzLBTCsClient.apiUzLBTCsClient.apiPaths.currencies
-		let response = await UzLBTCsClient.get(path)
+		let path = UzLBTCsApi.apiUzLBTCsApi.apiPaths.currencies
+		let response = await UzLBTCsApi.get(path)
 
 		return response.data.currencies
 	},
 	// TODO
 	getPlaces: async () => {
-		let path = UzLBTCsClient.apiUzLBTCsClient.apiPaths.places
+		let path = UzLBTCsApi.apiUzLBTCsApi.apiPaths.places
 
 		return path
 	},
 	// TODO Review, something is wrong here
 	getBTCPriceFromEquation: async (equationString) => {
-		let path = UzLBTCsClient.apiUzLBTCsClient.apiPaths.equation
+		let path = UzLBTCsApi.apiUzLBTCsApi.apiPaths.equation
 
 		let setEquation = equationString => path +`/${equationString}`
 
 		path = setEquation(equationString)
 
-		let response = await UzLBTCsClient.get(path)
+		let response = await UzLBTCsApi.get(path)
 
 		return response
 	},
 	// TODO
 	getFees: async () => {
-		let path = UzLBTCsClient.apiUzLBTCsClient.apiPaths.fees
+		let path = UzLBTCsApi.apiUzLBTCsApi.apiPaths.fees
 
 		return path
 	}
 }
 
-UzLBTCsClient.ads = {
+UzLBTCsApi.ads = {
 	setId: (path, adId) => path + `/${adId}`,
 	// TODO Review when id provided
 	get: async (adId = null) => {
-		let path = (adId == null) ? UzLBTCsClient.apiPaths.ads : UzLBTCsClient.ads.setId(UzLBTCsClient.apiUzLBTCsClient.apiPaths.adGet, adId)
+		let path = (adId == null) ? UzLBTCsApi.apiPaths.ads : UzLBTCsApi.ads.setId(UzLBTCsApi.apiUzLBTCsApi.apiPaths.adGet, adId)
 
-		let response = await UzLBTCsClient.get(path)
+		let response = await UzLBTCsApi.get(path)
 
 		return response.data.ad_list
 	},
 	// TODO
 	update: async (adId) => {
-		let path = UzLBTCsClient.ads.setId(UzLBTCsClient.apiUzLBTCsClient.apiPaths.ad_update, adId)
+		let path = UzLBTCsApi.ads.setId(UzLBTCsApi.apiUzLBTCsApi.apiPaths.ad_update, adId)
 
 		console.log('Update an advertisement')
 
@@ -181,7 +181,7 @@ UzLBTCsClient.ads = {
 	},
 	//TODO
 	create: async () => {
-		let path = UzLBTCsClient.apiPaths.ad_create
+		let path = UzLBTCsApi.apiPaths.ad_create
 
 		console.log('Create a new advertisement')
 
@@ -189,7 +189,7 @@ UzLBTCsClient.ads = {
 	},
 	// TODO
 	updateEquation: async (adId) => {
-		let path = UzLBTCsClient.ads.setId(UzLBTCsClient.apiPaths.ad_equation, adId)
+		let path = UzLBTCsApi.ads.setId(UzLBTCsApi.apiPaths.ad_equation, adId)
 
 		console.log('Update equation of an advertisement')
 
@@ -197,7 +197,7 @@ UzLBTCsClient.ads = {
 	},
 	//TODO
 	remove: async (adId) => {
-		let path = UzLBTCsClient.ads.setId(UzLBTCsClient.apiPaths.ad_remove, adId)
+		let path = UzLBTCsApi.ads.setId(UzLBTCsApi.apiPaths.ad_remove, adId)
 
 		console.log('Remove an advertisement')
 
@@ -205,11 +205,11 @@ UzLBTCsClient.ads = {
 	}
 }
 
-UzLBTCsClient.trades = {
+UzLBTCsApi.trades = {
 	setPath: (path, value) => path + `/${value}`,
 	// TODO
 	giveFeedbackTo: async (username) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.feedback, username)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.feedback, username)
 
 		console.log('Gives feedback to a user')
 
@@ -217,8 +217,8 @@ UzLBTCsClient.trades = {
 	},
 	// TODO
 	info: async (contactId = null) => {
-		let base_path = UzLBTCsClient.apiPaths.contact + 'info'
-		let path = (contactId === null) ? base_path : UzLBTCsClient.trades.setPath(base_path, contactId)
+		let base_path = UzLBTCsApi.apiPaths.contact + 'info'
+		let path = (contactId === null) ? base_path : UzLBTCsApi.trades.setPath(base_path, contactId)
 
 		console.log('Returns informations about a single trade id')
 
@@ -226,7 +226,7 @@ UzLBTCsClient.trades = {
 	},
 	// TODO
 	create: async (adId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'create', adId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'create', adId)
 
 		console.log('Start a trade from advertisement')
 
@@ -234,81 +234,81 @@ UzLBTCsClient.trades = {
 	},
 	// TODO
 	verify: async (type, contactId) => {
-		let base_path = UzLBTCsClient.apiPaths.contact + 'mark_' + type
-		let path = UzLBTCsClient.trades.setPath(base_path, contactId)
+		let base_path = UzLBTCsApi.apiPaths.contact + 'mark_' + type
+		let path = UzLBTCsApi.trades.setPath(base_path, contactId)
 
 		return path
 	},
 	// TODO
 	getMsgs: async (contactId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'messages', contactId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'messages', contactId)
 
 		return path
 	},
 	// TODO
 	postMsg: async (contactId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'message_post', contactId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'message_post', contactId)
 
 		return path
 	},
 	// TODO
 	paid: async (contactId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'mark_as_paid', contactId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'mark_as_paid', contactId)
 
 		return path
 	},
 	// TODO
 	releaseBTC: async (contactId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'release', contactId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'release', contactId)
 
 		return path
 	},
 	// TODO
 	cancel: async (contactId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'cancel', contactId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'cancel', contactId)
 
 		return path
 	},
 	// TODO
 	dispute: async (contactId) => {
-		let path = UzLBTCsClient.trades.setPath(UzLBTCsClient.apiPaths.contact + 'dispute', contactId)
+		let path = UzLBTCsApi.trades.setPath(UzLBTCsApi.apiPaths.contact + 'dispute', contactId)
 
 		return path
 	}
 }
 
-UzLBTCsClient.account = {
+UzLBTCsApi.account = {
 	getUserInfo: async (username) => {
-		let path = UzLBTCsClient.apiPaths.account_info + `/${username}`
-		let response = await UzLBTCsClient.get(path)
+		let path = UzLBTCsApi.apiPaths.account_info + `/${username}`
+		let response = await UzLBTCsApi.get(path)
 
 		return response.data
 	},
 	myself: async () => {
-		let path = UzLBTCsClient.apiPaths.myself
-		let response = await UzLBTCsClient.get(path)
+		let path = UzLBTCsApi.apiPaths.myself
+		let response = await UzLBTCsApi.get(path)
 
 		return response.data
 	},
 	// TODO
 	dashbord: {
 		info: async () => {
-			let path = UzLBTCsClient.apiPaths.dashbord
+			let path = UzLBTCsApi.apiPaths.dashbord
 
 			return path
 		},
 		released: async () => {
-			let path = UzLBTCsClient.apiPaths.dashbord + '/released'
+			let path = UzLBTCsApi.apiPaths.dashbord + '/released'
 
 			return path
 		},
 		canceled: async () => {
-			let path = UzLBTCsClient.apiPaths.dashbord + '/canceled'
+			let path = UzLBTCsApi.apiPaths.dashbord + '/canceled'
 
 			return path
 		},
 		closed: async () => {
-			let path = UzLBTCsClient.apiPaths.dashbord + '/closed'
+			let path = UzLBTCsApi.apiPaths.dashbord + '/closed'
 
 			return path
 		}
@@ -316,70 +316,70 @@ UzLBTCsClient.account = {
 	// TODO
 	notifications: {
 		getList: async () => {
-			let path = UzLBTCsClient.apiPaths.notifications
+			let path = UzLBTCsApi.apiPaths.notifications
 
 			return path
 		},
 		markAsRead: async (notificationId) => {
-			let path = UzLBTCsClient.apiPaths.notifications + '/mark_as_read/' + notificationId
+			let path = UzLBTCsApi.apiPaths.notifications + '/mark_as_read/' + notificationId
 
 			return path
 		}
 	},
 	// TODO
 	getRecentMsgs: async () => {
-		let path = UzLBTCsClient.apiPaths.recentMessages
+		let path = UzLBTCsApi.apiPaths.recentMessages
 
 		return path
 	},
 	// TODO
 	getRealNameVerifiers: async (username) => {
-		let path = UzLBTCsClient.apiPaths.real_name_verifiers + `/${username}`
+		let path = UzLBTCsApi.apiPaths.real_name_verifiers + `/${username}`
 
 		return path
 	},
 	// TODO
 	pincode: async () => {
-		let path = UzLBTCsClient.apiPaths.pincode
+		let path = UzLBTCsApi.apiPaths.pincode
 
 		return path
 	},
 	// TODO
 	logout: async () => {
-		let path = UzLBTCsClient.apiPaths.logout
+		let path = UzLBTCsApi.apiPaths.logout
 
 		return path
 	}
 }
 
-UzLBTCsClient.wallet = {
+UzLBTCsApi.wallet = {
 	// TODO
 	getInfo: async () => {
-		let path = UzLBTCsClient.apiPaths.walletInfo
+		let path = UzLBTCsApi.apiPaths.walletInfo
 
 		return path
 	},
 	// TODO
 	getBalance: async () => {
-		let path = UzLBTCsClient.apiPaths.walletBalance
+		let path = UzLBTCsApi.apiPaths.walletBalance
 
 		return path
 	},
 	// TODO
 	send: async () => {
-		let path = UzLBTCsClient.apiPaths.walletSend
+		let path = UzLBTCsApi.apiPaths.walletSend
 
 		return path
 	},
 	// TODO
 	sendPin: async () => {
-		let path = UzLBTCsClient.apiPaths.walletSendPin
+		let path = UzLBTCsApi.apiPaths.walletSendPin
 
 		return path
 	},
 	// TODO
 	getAddr: async () => {
-		let path = UzLBTCsClient.apiPaths.walletAddr
+		let path = UzLBTCsApi.apiPaths.walletAddr
 
 		return path
 	}
@@ -388,7 +388,7 @@ UzLBTCsClient.wallet = {
 /**
  * Access Localbitcoins public market data
  */
-UzLBTCsClient.publicMarketData = {
+UzLBTCsApi.publicMarketData = {
 	/**
 	 * Selling and Buying ads list
 	 * 
@@ -423,7 +423,7 @@ UzLBTCsClient.publicMarketData = {
 		let path = (paymentMethod) ? `${basePath}/${countryCode}/${countryName}/${paymentMethod}/${suffix}` : `${basePath}/${countryCode}/${countryName}/${suffix}`
 
 		//console.log(path);
-		let response = await UzLBTCsClient.get(path, true)
+		let response = await UzLBTCsApi.get(path, true)
 
 		//console.log(response.data.ad_list)
 
@@ -434,7 +434,7 @@ UzLBTCsClient.publicMarketData = {
 	bitcoinAverage: async () => {
 		let path = 'bitcoinaverage/ticker-all-currencies/'
 
-		let response = await UzLBTCsClient.get(path, true)
+		let response = await UzLBTCsApi.get(path, true)
 
 		return response
 	},
@@ -442,18 +442,18 @@ UzLBTCsClient.publicMarketData = {
 		trades: async (currency) => {
 			let path = 'bitcoincharts/' + currency + '/trades.json'
 
-			let response = await UzLBTCsClient.get(path, true)
+			let response = await UzLBTCsApi.get(path, true)
 
 			return response
 		},
 		orderBooks: async (currency) => {
 			let path = 'bitcoincharts/' + currency + '/orderbook.json'
 
-			let response = await UzLBTCsClient.get(path, true)
+			let response = await UzLBTCsApi.get(path, true)
 
 			return response
 		}
 	}
 }
 
-module.exports = UzLBTCsClient
+module.exports = UzLBTCsApi
