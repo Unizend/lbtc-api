@@ -43,6 +43,12 @@ uzLBTCsApi.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
     console.log(response)
 })*/
 
-const user = uzLBTCsApi.account.myself().then(response => {
+/*const user = uzLBTCsApi.account.myself().then(response => {
+    console.log(response)
+})*/
+
+const vesPrice = uzLBTCsApi.publicMarketData.adsList('sell', {
+    paymentMethod: 'transferwise'
+}).then(response => {
     console.log(response)
 })

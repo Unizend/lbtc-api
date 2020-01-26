@@ -408,7 +408,7 @@ UnizendLocalBTC.publicMarketData = {
 	 * /sell-bitcoins-online/${countrycode}/${country_name}/${payment_method}/.json
 	 * /sell-bitcoins-with-cash/{location_id}/{location_slug}/.json // TODO
 	 */
-	adsList: async (action, options, page) => {
+	adsList: async (action, options = {}, page) => {
 		let prefix = action + '-'
 
 		//console.log(options)
@@ -416,11 +416,20 @@ UnizendLocalBTC.publicMarketData = {
 		let countryCode = (options.countryCode) ? options.countryCode : false
 		let countryName = (options.countryName) ? options.countryName : false
 		let paymentMethod = (options.paymentMethod) ? options.paymentMethod : false
+		let currency = (options.currency) ? options.currency : false
 		
 		let basePath = prefix + 'bitcoins-online'
 		let suffix = (page > 1) ? `.json?page=${page}` : '.json'
 
-		let path = (paymentMethod) ? `${basePath}/${countryCode}/${countryName}/${paymentMethod}/${suffix}` : `${basePath}/${countryCode}/${countryName}/${suffix}`
+		let path
+
+		if (currency) {
+			path = (paymentMethod) ? `${basePath}/${currency}/${paymentMethod}/${suffix}` : `${basePath}/${currency}/${suffix}`
+		}else if (countryCode && countryName) {
+			path = (paymentMethod) ? `${basePath}/${countryCode}/${countryName}/${paymentMethod}/${suffix}` : `${basePath}/${countryCode}/${countryName}/${suffix}`
+		} else if (!currency && !countryCode && !countryName) {
+			path = (paymentMethod) ? `${basePath}/${paymentMethod}/${suffix}` : `${basePath}/${suffix}`
+		}
 
 		//console.log(path);
 		let response = await UnizendLocalBTC.get(path, true)
