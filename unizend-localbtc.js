@@ -123,27 +123,27 @@ UnizendLocalBTC.localbitcoins = {
 		return response[paymentMethod]
 	},
 	getCountryCodes: async () => {
-		let path = UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.countryCodes
+		let path = UnizendLocalBTC.apiPaths.countryCodes
 		let response = await UnizendLocalBTC.get(path)
 
 		return response.data.cc_list
 	},
 	// TODO Add the possibility to get an specific currency
 	getCurrencies: async () => {
-		let path = UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.currencies
+		let path = UnizendLocalBTC.apiPaths.currencies
 		let response = await UnizendLocalBTC.get(path)
 
 		return response.data.currencies
 	},
 	// TODO
 	getPlaces: async () => {
-		let path = UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.places
+		let path = UnizendLocalBTC.apiPaths.places
 
 		return path
 	},
 	// TODO Review, something is wrong here
 	getBTCPriceFromEquation: async (equationString) => {
-		let path = UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.equation
+		let path = UnizendLocalBTC.apiPaths.equation
 
 		let setEquation = equationString => path +`/${equationString}`
 
@@ -155,7 +155,7 @@ UnizendLocalBTC.localbitcoins = {
 	},
 	// TODO
 	getFees: async () => {
-		let path = UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.fees
+		let path = UnizendLocalBTC.apiPaths.fees
 
 		return path
 	}
@@ -165,7 +165,7 @@ UnizendLocalBTC.ads = {
 	setId: (path, adId) => path + `/${adId}`,
 	// TODO Review when id provided
 	get: async (adId = null) => {
-		let path = (adId == null) ? UnizendLocalBTC.apiPaths.ads : UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.adGet, adId)
+		let path = (adId == null) ? UnizendLocalBTC.apiPaths.ads : UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.adGet, adId)
 
 		let response = await UnizendLocalBTC.get(path)
 
