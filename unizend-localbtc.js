@@ -103,7 +103,7 @@ UnizendLocalBTC.apiPaths = {
 UnizendLocalBTC.localbitcoins = {
 	getPaymentMethodsList: async (countryCode = null) => {
 		let response = null
-		let path = UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.paymentMethods
+		let path = UnizendLocalBTC.apiPaths.paymentMethods
 
 		let setCountryCode = countryCode => path + `/${countryCode}`
 
@@ -173,7 +173,7 @@ UnizendLocalBTC.ads = {
 	},
 	// TODO
 	update: async (adId) => {
-		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiUnizendLocalBTC.apiPaths.ad_update, adId)
+		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.ad_update, adId)
 
 		console.log('Update an advertisement')
 
