@@ -58,11 +58,7 @@ To get a local copy up and running follow these simple steps.
  
 Go to yourn project folder and exec  the following command
 
-    npm i unizend-localbtc
-
-Then install all dependencies
-
-    npm install
+    npm i --save unizend-localbtc
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -73,11 +69,11 @@ For more information check the [Localbitcoins API Documentation](https://localbi
 
 **Require the library:**
 
-    const uzLBTCsApi = require('./uz-localbitcoins-api')
+    const lbtc = require('./unizend-localbtc')
 
 **Call the `init()` method:**
 
-    uzLBTCsApi.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
+    lbtc.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
 
 <!-- ROADMAP -->
 ## Roadmap
