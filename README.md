@@ -121,15 +121,15 @@ Project Link: [https://github.com/rincorpes/unizend-localbtc](https://github.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/Rincorpes/unizend-localbtc.svg?style=flat-square
 [contributors-url]: https://github.com/Rincorpes/unizend-localbtc/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/Rincorpes/unizend-localbtc.svg?style=flat-square
 [forks-url]: https://github.com/Rincorpes/unizend-localbtc/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/Rincorpes/unizend-localbtc.svg?style=flat-square
 [stars-url]: https://github.com/Rincorpes/unizend-localbtc/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/Rincorpes/unizend-localbtc.svg?style=flat-square
 [issues-url]: https://github.com/Rincorpes/unizend-localbtc/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
+[license-shield]: https://img.shields.io/github/license/Rincorpes/unizend-localbtc.svg?style=flat-square
 [license-url]: https://github.com/Rincorpes/unizend-localbtc/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rincorpes/
