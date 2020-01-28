@@ -14,7 +14,8 @@
     "localbitcoins",
     "api",
     "btc",
-    "bitcoin"
+    "bitcoin",
+    "unizend"
   ],
   "author": "Santiago Rincon (https://github.com/Rincorpes)",
   "license": "MIT",
