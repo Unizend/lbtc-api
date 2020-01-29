@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [Code of conduct](CODE-OF-CONNDUCT.md) By [@Rincorpes](https://github.com/Rincorpes)
 * [Conntributing](CONTRIBUTING.md) By [@Rincorpes](https://github.com/Rincorpes)
 * [Change Log](CHANGELOG.md) By [@Rincorpes](https://github.com/Rincorpes)
-* Changelog badge. By [@Rincorpes](https://github.com/Rincorpes)
 ### Changed
 * [README.md] By [@wickathou](https://github.com/wickathou)
 

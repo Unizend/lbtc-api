@@ -1,4 +1,4 @@
-[![Changelog][changelog-shield]][changelog-url] [![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![MIT License][license-shield]][license-url] [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![MIT License][license-shield]][license-url] [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -58,7 +58,11 @@ To get a local copy up and running follow these simple steps.
  
 Go to yourn project folder and exec  the following command
 
-    npm i --save unizend-localbtc
+    npm i unizend-localbtc
+
+Then install all dependencies
+
+    npm install
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -67,12 +71,13 @@ All you will need is your HMAC Auth key and secret wich you can get from [here](
 
 For more information check the [Localbitcoins API Documentation](https://localbitcoins.com/api-docs/)
 
-    // Require the `unizend-localbtc`and the `doetnv` config
-    const lbtc = require('./unizend-localbtc')
-    require('dotenv').config()
+**Require the library:**
 
-    // Call the `init()` method
-    lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
+    const uzLBTCsApi = require('./uz-localbitcoins-api')
+
+**Call the `init()` method:**
+
+    uzLBTCsApi.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -116,15 +121,15 @@ Project Link: [https://github.com/rincorpes/unizend-localbtc](https://github.com
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Rincorpes/unizend-localbtc.svg?style=flat-square
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
 [contributors-url]: https://github.com/Rincorpes/unizend-localbtc/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Rincorpes/unizend-localbtc.svg?style=flat-square
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=flat-square
 [forks-url]: https://github.com/Rincorpes/unizend-localbtc/network/members
-[stars-shield]: https://img.shields.io/github/stars/Rincorpes/unizend-localbtc.svg?style=flat-square
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=flat-square
 [stars-url]: https://github.com/Rincorpes/unizend-localbtc/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Rincorpes/unizend-localbtc.svg?style=flat-square
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
 [issues-url]: https://github.com/Rincorpes/unizend-localbtc/issues
-[license-shield]: https://img.shields.io/github/license/Rincorpes/unizend-localbtc.svg?style=flat-square
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=flat-square
 [license-url]: https://github.com/Rincorpes/unizend-localbtc/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/rincorpes/
