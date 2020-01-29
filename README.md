@@ -1,4 +1,4 @@
-[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![MIT License][license-shield]][license-url] [![LinkedIn][linkedin-shield]][linkedin-url]
+[![Changelog][changelog-shield]][changelog-url] [![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![MIT License][license-shield]][license-url] [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -67,13 +67,12 @@ All you will need is your HMAC Auth key and secret wich you can get from [here](
 
 For more information check the [Localbitcoins API Documentation](https://localbitcoins.com/api-docs/)
 
-**Require the library:**
-
+    // Require the `unizend-localbtc`and the `doetnv` config
     const lbtc = require('./unizend-localbtc')
+    require('dotenv').config()
 
-**Call the `init()` method:**
-
-    lbtc.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
+    // Call the `init()` method
+    lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 
 <!-- ROADMAP -->
 ## Roadmap
