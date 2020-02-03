@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [1.1.0] - 2020-01-28
+### Fixed shields on readme
+* [Readme](README.md) By [@wickathou](https://github.com/wickathou)
+
 ## [1.1.0] - 2020-01-28
 ### Added
 * [Code of conduct](CODE-OF-CONNDUCT.md) By [@Rincorpes](https://github.com/Rincorpes)
