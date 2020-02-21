@@ -440,10 +440,16 @@ UnizendLocalBTC.publicMarketData = {
 
 
 	},
-	bitcoinAverage: async () => {
+	bitcoinAverage: async (currency = null, time = null) => {
+		// Declares response
+		let response
+		// Sets the pass to be used
 		let path = 'bitcoinaverage/ticker-all-currencies/'
 
-		let response = await UnizendLocalBTC.get(path, true)
+		// Gets data from API
+		let data = await UnizendLocalBTC.get(path, true)
+
+		response = (currency) ? response = (time) ? data[currency]['avg_' + time] : data[currency] : data
 
 		return response
 	},
