@@ -1,6 +1,6 @@
 {
   "name": "unizend-localbtc",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "NodeJS Client Library for the Localbitcoins API",
   "main": "unizend-localbtc.js",
   "scripts": {
