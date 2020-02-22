@@ -374,6 +374,11 @@ UnizendLocalBTC.ads = {
 	}
 }
 
+/**
+ * Trades
+ * 
+ * @since 1.0.0
+ */
 UnizendLocalBTC.trades = {
 	setPath: (path, value) => path + `/${value}`,
 	// TODO
@@ -612,7 +617,7 @@ UnizendLocalBTC.publicMarketData = {
 		let currency = (options.currency) ? options.currency : false
 		
 		let basePath = prefix + 'bitcoins-online'
-		let suffix = (page > 1) ? `.json?page=${page}` : '.json'
+		let suffix = (page > 1) ? `.json?page=2` : '.json'
 
 		let path
 
@@ -624,10 +629,11 @@ UnizendLocalBTC.publicMarketData = {
 			path = (paymentMethod) ? `${basePath}/${paymentMethod}/${suffix}` : `${basePath}/${suffix}`
 		}
 
-		//console.log(path);
+		// console.log(page)
+
 		let response = await UnizendLocalBTC.get(path, true)
 
-		//console.log(response.data.ad_list)
+		// console.log(response.pagination.next)
 
 		return response
 

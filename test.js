@@ -59,20 +59,9 @@ uzLBTCsApi.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
     console.log(response)
 }) */
 
-// 1.0.9
 uzLBTCsApi.publicMarketData.adsList('sell', {
     countryCode: 've',
     countryName: 'venezuela'
-}, '2').then(response => {
+}, 2).then(response => {
     console.log(response)
-    const timer = () => {
-        uzLBTCsApi.publicMarketData.adsList('sell', {
-            countryCode: 'co',
-            countryName: 'colombia'
-        }).then(response => {
-            console.log(response)
-        })
-    }
-    setTimeout(timer, 1000)
 })
-
