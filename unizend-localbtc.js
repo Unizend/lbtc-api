@@ -1,29 +1,108 @@
+// Copyright (c) 2019 Santiago Rincón
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 "use strict";
 
+// Node Denendencies
 const querystring = require('querystring')
 const fetch = require('node-fetch')
 const crypto = require('crypto')
 
+/**
+ * unizend-localbtc Object object
+ * 
+ * Unizend's Node.js Localbitcoins API Client Library has been build to help
+ * you access to the localbitcoins API from your Node.js project.
+ * 
+ * It provides a series of methods that hopefully will ease your development
+ * with the Localbitcoins API using Node.js.
+ * 
+ * For more, explore the docs »
+ * http://unizend-localbtc.us-east-1.elasticbeanstalk.com/
+ */
 const UnizendLocalBTC = {}
 
+/**
+ * Method to initialize the API
+ * 
+ * @since 1.0.0
+ * 
+ * @param key String
+ * 	HMAC authentication key that you got when you created your HMAC
+ * 	authentication from the localbitcoins apps dashboard.
+ * 	https://localbitcoins.com/accounts/api/
+ * @param secret String
+ * 	Your API request signed with your HMAC secret that you got when you
+ * 	create your HMAC authentication from the localbitcoins apps dashboard.
+ * 	https://localbitcoins.com/accounts/api/
+ */
 UnizendLocalBTC.init = (key, secret) => {
+	// Saves key and secret into the object for latter use
 	UnizendLocalBTC.key = key
 	UnizendLocalBTC.secret = secret
+	// Saves the localbitcoins base url
 	UnizendLocalBTC.rootUrl = 'https://localbitcoins.com'
+	// Define Heders
 	UnizendLocalBTC.defaulHeaders = {
 		'Content-Type': 'application/x-www-form-urlencoded',
 		'Apiauth-Key': UnizendLocalBTC.key
 	}
 }
 
+/**
+ * Ends the path behavior control process you start in the get method.
+ * 
+ * @since 1.0.0
+ * 
+ * @param path String
+ * 	The path for the request
+ * @param publicApi Boolean @default false
+ * 	Controls the path behavior.
+ * 
+ * @returns String | The API path
+ */
 UnizendLocalBTC.parsePath = (path, publicApi = false) => {
+	// If true it means you are working with the public market data, so the
+	// we it will not add the '/api/' prefix.
+	// Else, it adds the prefix so there will be no errors in the paths.
 	path = (publicApi === true) ? '/' + path : '/api/' + path + '/'
 
 	return path
 }
 
+/**
+ * Generates a signature
+ * 
+ * @param path String
+ * 	The localbitcoins API path that will be requested
+ * @param params Object
+ * 	Params for POST request
+ * @param nonce Int
+ * 	A numbere each time greater
+ * 
+ * @returns String | Encripted signature
+ */
 UnizendLocalBTC.getMessageSignature = (path, params, nonce) => {
+	// Make param legible
 	const postParameters = querystring.stringify(params)
+	// Message for the signature
 	const message = nonce + UnizendLocalBTC.key + path + postParameters
 
 	return crypto
@@ -33,8 +112,23 @@ UnizendLocalBTC.getMessageSignature = (path, params, nonce) => {
 		.toUpperCase()
 }
 
+/**
+ * Gets header
+ * 
+ * @since 1.0.0
+ * 
+ * @param path String
+ * 	The path for the request
+ * @param params Object
+ * 	The objec with the request params.
+ * 
+ * @returns Object | Headers
+ */
 UnizendLocalBTC.getHeaders = (path, params = {}) => {
+	// A unique number given with each API request. It's value needs to be greater
+	// with each API request. https://localbitcoins.com/api-docs/
 	let nonce = new Date() * 1000
+	// Build the token
 	let signature = UnizendLocalBTC.getMessageSignature(path, params, nonce)
 
 	return {
@@ -43,8 +137,23 @@ UnizendLocalBTC.getHeaders = (path, params = {}) => {
 	}
 }
 
+/**
+ * Makes a GET request to the localbitcoins API
+ * 
+ * @since 1.0.0
+ * 
+ * @param path String
+ * 	The path for the request
+ * @param publicApi Boolean @default false
+ * 	When you are using the public market data from localbitcoins, the path
+ * 	change a bit. For this reasson we have this var, to control that behavior.
+ * 
+ * @returns Object | The localbitcoins API response
+ */
 UnizendLocalBTC.get = async (path, publicApi = false) => {
+	// gets the final path.
 	path = UnizendLocalBTC.parsePath(path, publicApi)
+
 	const headers = UnizendLocalBTC.getHeaders(path, {})
 	const res = await fetch(UnizendLocalBTC.rootUrl + path, { method: 'GET', headers })
 
@@ -53,6 +162,18 @@ UnizendLocalBTC.get = async (path, publicApi = false) => {
 	return res.json()
 }
 
+/**
+ * Makes a POST request to the localbitcoins API
+ * 
+ * @since 1.0.0
+ * 
+ * @param path String
+ * 	The path for the request
+ * @param params Object
+ * 	Contains the param for the request
+ * 
+ * @returns Object | The localbitcoins API response
+ */
 UnizendLocalBTC.post = async (path, params) => {
 	path = UnizendLocalBTC.parsePath(path)
 	const headers = UnizendLocalBTC.getHeaders(path, params)
@@ -67,6 +188,11 @@ UnizendLocalBTC.post = async (path, params) => {
 	return res.json()
 },
 
+/**
+ * API paths list
+ * 
+ * @since 1.0.0
+ */
 UnizendLocalBTC.apiPaths = {
 	paymentMethods: 'payment_methods',
 	countryCodes: 'countrycodes',
@@ -98,9 +224,16 @@ UnizendLocalBTC.apiPaths = {
 }
 
 /**
- * Localbitcoins public data
+ * Localbitcoins API public data
+ * 
+ * @since 1.0.0
  */
 UnizendLocalBTC.localbitcoins = {
+	/**
+	 * Payment methods list
+	 * 
+	 * @since 1.0.0
+	 */
 	getPaymentMethodsList: async (countryCode = null) => {
 		let response = null
 		let path = UnizendLocalBTC.apiPaths.paymentMethods
@@ -117,18 +250,34 @@ UnizendLocalBTC.localbitcoins = {
 
 		return response.data.methods
 	},
+	/**
+	 * Payment methods
+	 * 
+	 * @since 1.0.0
+	 */
 	getPaymentMethod: async (paymentMethod, countryCode = null) => {
 		let response = await UnizendLocalBTC.localbitcoins.getPaymentMethodsList(countryCode)
 
 		return response[paymentMethod]
 	},
+	/**
+	 * Country Codes list
+	 * 
+	 * @since 1.0.0
+	 */
 	getCountryCodes: async () => {
 		let path = UnizendLocalBTC.apiPaths.countryCodes
 		let response = await UnizendLocalBTC.get(path)
 
 		return response.data.cc_list
 	},
-	// TODO Add the possibility to get an specific currency
+	/**
+	 * Currencies list
+	 * 
+	 * @since 1.0.0
+	 * 
+	 * TODO Add the possibility to get an specific currency
+	 */
 	getCurrencies: async () => {
 		let path = UnizendLocalBTC.apiPaths.currencies
 		let response = await UnizendLocalBTC.get(path)
@@ -141,6 +290,11 @@ UnizendLocalBTC.localbitcoins = {
 
 		return path
 	},
+	/**
+	 * BTC price from equation
+	 * 
+	 * @since 1.0.0
+	 */
 	// TODO Review, something is wrong here
 	getBTCPriceFromEquation: async (equationString) => {
 		let path = UnizendLocalBTC.apiPaths.equation
@@ -161,8 +315,23 @@ UnizendLocalBTC.localbitcoins = {
 	}
 }
 
+/**
+ * Ads
+ * 
+ * @since 1.0.0
+ */
 UnizendLocalBTC.ads = {
+	/**
+	 * Ads the id to the path
+	 * 
+	 * @since 1.0.0
+	 */
 	setId: (path, adId) => path + `/${adId}`,
+	/**
+	 * Gets an ad
+	 * 
+	 * @since 1.0.0
+	 */
 	// TODO Review when id provided
 	get: async (adId = null) => {
 		let path = (adId == null) ? UnizendLocalBTC.apiPaths.ads : UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.adGet, adId)
@@ -277,13 +446,28 @@ UnizendLocalBTC.trades = {
 	}
 }
 
+/**
+ * Account
+ * 
+ * @since 1.0.0
+ */
 UnizendLocalBTC.account = {
+	/**
+	 * Gets the info of an specific user
+	 * 
+	 * @since 1.0.0
+	 */
 	getUserInfo: async (username) => {
 		let path = UnizendLocalBTC.apiPaths.account_info + `/${username}`
 		let response = await UnizendLocalBTC.get(path)
 
 		return response.data
 	},
+	/**
+	 * Gets my user info
+	 * 
+	 * @since 1.0.0
+	 */
 	myself: async () => {
 		let path = UnizendLocalBTC.apiPaths.myself
 		let response = await UnizendLocalBTC.get(path)
@@ -352,6 +536,11 @@ UnizendLocalBTC.account = {
 	}
 }
 
+/**
+ * Wallet
+ * 
+ * @since 1.0.0
+ */
 UnizendLocalBTC.wallet = {
 	// TODO
 	getInfo: async () => {
@@ -387,10 +576,14 @@ UnizendLocalBTC.wallet = {
 
 /**
  * Access Localbitcoins public market data
+ * 
+ * @since 1.0.0
  */
 UnizendLocalBTC.publicMarketData = {
 	/**
 	 * Selling and Buying ads list
+	 * 
+	 * @since 1.0.0
 	 * 
 	 * Posible Path to test // TODO Test each path
 	 * /buy-bitcoins-online/.json
@@ -425,7 +618,7 @@ UnizendLocalBTC.publicMarketData = {
 
 		if (currency) {
 			path = (paymentMethod) ? `${basePath}/${currency}/${paymentMethod}/${suffix}` : `${basePath}/${currency}/${suffix}`
-		}else if (countryCode && countryName) {
+		} else if (countryCode && countryName) {
 			path = (paymentMethod) ? `${basePath}/${countryCode}/${countryName}/${paymentMethod}/${suffix}` : `${basePath}/${countryCode}/${countryName}/${suffix}`
 		} else if (!currency && !countryCode && !countryName) {
 			path = (paymentMethod) ? `${basePath}/${paymentMethod}/${suffix}` : `${basePath}/${suffix}`
@@ -440,6 +633,19 @@ UnizendLocalBTC.publicMarketData = {
 
 
 	},
+	/**
+	 * Get BTC Average price
+	 * 
+	 * @since 1.1.0
+	 * 
+	 * @param currency String
+	 * 	Filters result by one of the currencies supported
+	 * 	by localbitcoins @since 1.0.8
+	 * @param time String
+	 * 	Gets a specific timing @since 1.0.8
+	 * 	Posible values: 1h, 6h, 12h, 24h; where the number is for the
+	 * 	hours and the h means hours
+	 */
 	bitcoinAverage: async (currency = null, time = null) => {
 		// Declares response
 		let response
@@ -453,7 +659,17 @@ UnizendLocalBTC.publicMarketData = {
 
 		return response
 	},
+	/**
+	 * Bitcoin chars
+	 * 
+	 * @since 1.0.0
+	 */
 	bitcoinCharts: {
+		/**
+		 * Trades
+		 * 
+		 * @since 1.0.0
+		 */
 		trades: async (currency) => {
 			let path = 'bitcoincharts/' + currency + '/trades.json'
 
@@ -461,6 +677,11 @@ UnizendLocalBTC.publicMarketData = {
 
 			return response
 		},
+		/**
+		 * Order books
+		 * 
+		 * @since 1.0.0
+		 */
 		orderBooks: async (currency) => {
 			let path = 'bitcoincharts/' + currency + '/orderbook.json'
 

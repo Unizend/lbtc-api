@@ -4,6 +4,7 @@ require('dotenv').config()
 
 uzLBTCsApi.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 
+// 1.0.0
 /* const vesPrice = uzLBTCsApi.publicMarketData.adsList('sell', {
     countryCode: 've',
     countryName: 'venezuela'
@@ -53,6 +54,25 @@ uzLBTCsApi.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
     console.log(response)
 }) */
 
-const btcAverage = uzLBTCsApi.publicMarketData.bitcoinAverage('VES', '1h').then(response => {
+// 1.0.8
+/* const btcAverage = uzLBTCsApi.publicMarketData.bitcoinAverage('VES', '1h').then(response => {
     console.log(response)
+}) */
+
+// 1.0.9
+uzLBTCsApi.publicMarketData.adsList('sell', {
+    countryCode: 've',
+    countryName: 'venezuela'
+}, '2').then(response => {
+    console.log(response)
+    const timer = () => {
+        uzLBTCsApi.publicMarketData.adsList('sell', {
+            countryCode: 'co',
+            countryName: 'colombia'
+        }).then(response => {
+            console.log(response)
+        })
+    }
+    setTimeout(timer, 1000)
 })
+
