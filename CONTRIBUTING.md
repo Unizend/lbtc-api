@@ -7,6 +7,18 @@ email, or any other method with the owners of this repository before making a ch
 
 Please note we have a [code of conduct](CODE-OF-CONDUCT.md), please follow it in all your interactions with the project.
 
+## Questions/Help
+
+Do you need help?
+
+An example will get you help faster than anything else you do. Create an example and submit it as an [issue](https://github.com/Rincorpes/unizend-localbtc/issues) with the label `question`
+
+Yo can also write to santiago@unizend.com and I'll be happy to help you. :-)
+
+## Reporting Bugs/Requesting Features
+
+If you find bugs or want new features, pleas submit a new [issue](https://github.com/Rincorpes/unizend-localbtc/issues) with a clear description with the label `bug` for bugs, `invalid`, if you think it could be better in other way; or `enhancement` to request new features.
+
 ## Pull Request Process
 
 If you consider that:
