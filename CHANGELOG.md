@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [1.0.11] - 2020-02-23
+### Changed
+* CONTRIBUTING.md By [@Rincorpes](https://github.com/Rincorpes)
+  * Pull Request Process resction improvement
+
+
 ## [1.0.10] - 2020-02-23
 ### Changed
 * CONTRIBUTING.md By [@Rincorpes](https://github.com/Rincorpes)
