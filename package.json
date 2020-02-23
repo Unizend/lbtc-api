@@ -3,6 +3,9 @@
   "version": "1.0.9",
   "description": "NodeJS Client Library for the Localbitcoins API",
   "main": "unizend-localbtc.js",
+  "bin": {
+    "lbtc": "cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
