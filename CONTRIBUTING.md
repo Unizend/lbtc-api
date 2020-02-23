@@ -21,26 +21,63 @@ If you find bugs or want new features, pleas submit a new [issue](https://github
 
 ## Pull Request Process
 
-If you consider that:
+Follow the steps below to make a contribution to this tool:
 
-* You have added some new featuree with which you add value so that more people reuse it,
+### 1) Develop first
+
+1. Fork the Project
+2. Clone the forked project
+
+         git clone https://github.com/<your-user-name>/unizend-localbtc
+
+3. Set it up
+
+         # Open the dir
+         cd unizend-localbtc
+
+         # Create a branch to work with
+         git checkout -b <your-awesome-solution-name>
+
+         # Install all dependencies
+         npm install
+
+4. Set env vars
+
+         # Creat your .env file
+         touch .env
+
+         # Open the file with your favorite text editor and add the following
+
+         # Localbitcoins API HMAC Auth Key and Secrret
+         AUTH_KEY=<your-localbitcoins-api-hmac-auth-key>
+         AUTH_SECRET=<your-localbitcoins-api-hmac-auth-secret>
+
+5. Start coding
+
+
+### 2) If you consider the following:
+
+* You have added some new featuree with which you add value so that more people reuse this library,
 * You have made the tool more versatile to be compatible with new updates,
 * You have fixed an existing issue,
 * Or you have simply improved the user interface or its documentation
  
 Then we encourage you to return the progress made to the repository.
 
-Follow the steps below to make a contribution to the digital tool:
-
-1. Fork the Project
-2. Develop your awesom feature to add value to this tool
-3. Ensure any install or build dependencies are removed before the end of the layer when doing a 
-   build.
-4. Update the README.md with details of changes to the interface, this includes new environment 
+### 3) Submit your update
+         
+1. Update the README.md with details of changes to the interface, this includes new environment 
    variables, exposed ports, useful file locations and container parameters.
-5. Increase the version numbers in any examples files and the README.md to the new version that this
+2. Increase the version numbers in any examples files and the README.md to the new version that this
    Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
-6. You may merge the Pull Request in once you have the sign-off of two other developers, or if you 
+3. commit your changes
+
+         git add .
+         git commit -m "<your-awesome-message>"
+
+         git push -u origin <your-awesome-solution-name>
+
+4. You may merge the Pull Request in once you have the sign-off of two other developers, or if you 
    do not have permission to do that, you may request the second reviewer to merge it for you.
 
 If you have not contributed to this repo, but thhe tool has been useful for you, we would love to read your experience. Tell us about it openiing an issue or throug admin@unizend.com
