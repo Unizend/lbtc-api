@@ -59,9 +59,18 @@ uzLBTCsApi.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
     console.log(response)
 }) */
 
-uzLBTCsApi.publicMarketData.adsList('sell', {
-    countryCode: 've',
-    countryName: 'venezuela'
-}, 2).then(response => {
-    console.log(response)
-})
+// uzLBTCsApi.publicMarketData.adsList('sell', {
+//     countryCode: 've',
+//     countryName: 'venezuela'
+// }, 2).then(response => {
+//     console.log(response)
+// })
+
+uzLBTCsApi.publicMarketData.bitcoinAverage('VES')
+    .then(response => {
+        console.log(response)
+    })
+
+// uzLBTCsApi.publicMarketData.adsList('sell', { countrycode: 've', countryName: 'venezuela' }).then(response => {
+//     console.log(response)
+// })
