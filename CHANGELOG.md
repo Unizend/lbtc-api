@@ -6,17 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.3] - 2020-03-23
+### Changed
+* CONTRIBUTING.md By [@Rincorpes](https://github.com/Rincorpes)
+  * Pull Request Process > develop first section improvement
+  * Pull Request Process > submit your update section improvement
+* Logo in README.md By [@Rincorpes](https://github.com/Rincorpes)
+### Added
+  * `.env.example` file By [@Rincorpes](https://github.com/Rincorpes)
 
 ## [1.1.0] - 2020-03-23
-### Changed
+### Fixed
 * publicMarketData.bitcoinAverage error handling support By [@Rincorpes](https://github.com/Rincorpes)
-
 
 ## [1.0.11] - 2020-02-23
 ### Changed
 * CONTRIBUTING.md By [@Rincorpes](https://github.com/Rincorpes)
   * Pull Request Process section improvement
-
 
 ## [1.0.10] - 2020-02-23
 ### Changed
@@ -28,19 +34,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 * New comments on the code By [@Rincorpes](https://github.com/Rincorpes)
 
-
-
 ## [1.0.8] - 2020-02-21
 ### Added
 * New options to get BTC average price. By [@Rincorpes](https://github.com/Rincorpes)
   * **currency** Sting. To get the average of an specific currency
   * **time** String. To set the average time. Possible time options: 1h, 6h, 12h, 24h
 
-
 ## [1.0.7] - 2020-02-18
 ### Changed
 * Node modules updated By [@Rincorpes](https://github.com/Rincorpes)
-
 
 ## [1.0.6] - 2020-01-28
 ### Fixed
@@ -51,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * [Code of conduct](CODE-OF-CONNDUCT.md) By [@Rincorpes](https://github.com/Rincorpes)
 * [Conntributing](CONTRIBUTING.md) By [@Rincorpes](https://github.com/Rincorpes)
 * [Change Log](CHANGELOG.md) By [@Rincorpes](https://github.com/Rincorpes)
+
 ### Changed
 * [README.md] By [@wickathou](https://github.com/wickathou)
 
