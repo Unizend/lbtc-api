@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2020-03-23
+### Added
+* `publicMarketData.customBTCAvgList()` method to allow get custom average btc prices list By [@Rincorpes](https://github.com/Rincorpes)
+
 ## [1.1.4] - 2020-03-23
 ### Changed
 * README.md Installation and usage sections By [@Rincorpes](https://github.com/Rincorpes)
