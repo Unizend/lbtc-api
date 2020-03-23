@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.4] - 2020-03-23
+### Changed
+* README.md Installation and usage sections By [@Rincorpes](https://github.com/Rincorpes)
+
 ## [1.1.3] - 2020-03-23
 ### Changed
 * CONTRIBUTING.md By [@Rincorpes](https://github.com/Rincorpes)

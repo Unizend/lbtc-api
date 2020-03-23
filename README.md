@@ -52,17 +52,13 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
+To get this node.js module up and running follow these simple steps.
 
 ### Installation
  
-Go to yourn project folder and exec  the following command
+Go to yourn project folder and exec the following command
 
     npm i unizend-localbtc
-
-Then install all dependencies
-
-    npm install
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -71,13 +67,17 @@ All you will need is your HMAC Auth key and secret wich you can get from [here](
 
 For more information check the [Localbitcoins API Documentation](https://localbitcoins.com/api-docs/)
 
-**Require the library:**
+    // Require the library
+    const lbtc = require('unizend-localbtc')
 
-    const uzLBTCsApi = require('./uz-localbitcoins-api')
+    // Initialize the app using your HMAC Auth key and secret
+    lbtc.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
 
-**Call the `init()` method:**
-
-    uzLBTCsApi.init(YOUR_HMAC_AUTH_KEY, YOUR_HMAC_AUTH_SECRET)
+    // Get an specific currency average data
+    lbtc.publicMarketData.bitcoinAverage('VES')
+      .then(response => {
+          console.log(response)
+      })
 
 <!-- ROADMAP -->
 ## Roadmap
