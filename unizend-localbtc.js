@@ -661,9 +661,54 @@ UnizendLocalBTC.publicMarketData = {
 		// Gets data from API
 		let data = await UnizendLocalBTC.get(path, true)
 
-		currency = currency.toUpperCase()
+		currency = (currency) ? currency.toUpperCase() : null
 
 		response = (!data.error) ? (currency && data[currency]) ? (time) ? (data[currency]['avg_' + time]) ? data[currency]['avg_' + time] : (time === 'volume') ? data[currency].volume_btc : { error: `Invalid param "${time}"` } : data[currency] : (currency) ? { error: 'Use a valid currency' } : data : data
+
+		return response
+	},
+	/**
+	 * Get custom BTC Average prices list
+	 * 
+	 * @since 1.2.0
+	 * 
+	 * @param currencies Object
+	 * 	List of currencies. Let's see an example
+	 * 		currencies = {
+	 * 			VES: '1h',			// Valid
+	 * 			cop: 'volume',	// Valid
+	 * 			Mxn: '12h',			// Valid
+	 * 			USD: '22h',			// Invalid
+	 * 			ZZZ: '12h'			// Invalid
+	 * 		}
+	 * 
+	 * 		It doesn't matter if the currency is uppercase
+	 * 		or not, but it has to be a valid currency.
+	 * 
+	 * 		valid currency values:
+	 * 			1h, 6h, 12h, 24h: reurns the average price from the last n hours.
+	 * 			volume: returns the averge BTC volume from the last 24h
+	 */
+	customBTCAvgList: async (currencies = {}) => {
+		let response = {}
+		let data = await UnizendLocalBTC.publicMarketData.bitcoinAverage()
+
+		for (let currency in currencies) {
+			currency = currency.toUpperCase()
+			if (data[currency]) {
+				if (data[currency]['avg_' + currencies[currency]]) {
+					response[currency] =  { [currencies[currency]]: data[currency]['avg_' + currencies[currency]] }
+				} else if (currencies[currency] === 'volume') {
+					response[currency] = { volume: data[currency].volume_btc }
+				} else if (currencies[currency] === 'all') {
+					response = data[currency]
+				} else {
+					response[currency] = { error: 'invalid currency data' }
+				}
+			} else {
+				response[currency] = { error: 'invalid currency' }
+			}
+		}
 
 		return response
 	},

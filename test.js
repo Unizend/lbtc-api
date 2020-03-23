@@ -1,76 +1,77 @@
-const uzLBTCsApi = require('./unizend-localbtc')
+const lbtc = require('./unizend-localbtc')
 
 require('dotenv').config()
 
-uzLBTCsApi.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
+lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 
 // 1.0.0
-/* const vesPrice = uzLBTCsApi.publicMarketData.adsList('sell', {
+/* const vesPrice = lbtc.publicMarketData.adsList('sell', {
     countryCode: 've',
     countryName: 'venezuela'
 }).then(response => {
     console.log(response[1].data.payment_method)
 }) */
 
-/* const btcAverage = uzLBTCsApi.publicMarketData.bitcoinAverage().then(response => {
+/* const btcAverage = lbtc.publicMarketData.bitcoinAverage().then(response => {
     console.log(response.VES)
 }) */
 
-/* const btcCharts = uzLBTCsApi.publicMarketData.bitcoinCharts.orderBooks('VES').then(response => {
+/* const btcCharts = lbtc.publicMarketData.bitcoinCharts.orderBooks('VES').then(response => {
     console.log(response.bids)
 }) */
 
-/* const paymentMethodList = uzLBTCsApi.localbitcoins.getPaymentMethodsList('VE').then(response => {
+/* const paymentMethodList = lbtc.localbitcoins.getPaymentMethodsList('VE').then(response => {
     console.log(response)
 }) */
 
-/* const paymentMethod = uzLBTCsApi.localbitcoins.getPaymentMethod('transferwise', 've').then(response => {
+/* const paymentMethod = lbtc.localbitcoins.getPaymentMethod('transferwise', 've').then(response => {
     console.log(response)
 }) */
 
-/* const countryCodes = uzLBTCsApi.localbitcoins.getCountryCodes().then(response => {
+/* const countryCodes = lbtc.localbitcoins.getCountryCodes().then(response => {
     console.log(response)
 }) */
 
-/* const currencies = uzLBTCsApi.localbitcoins.getCurrencies().then(response => {
+/* const currencies = lbtc.localbitcoins.getCurrencies().then(response => {
     console.log(response.ETH)
 }) */
 
-/* const equation = uzLBTCsApi.localbitcoins.getBTCPriceFromEquation('btc_in_usd*0.9').then(response => {
+/* const equation = lbtc.localbitcoins.getBTCPriceFromEquation('btc_in_usd*0.9').then(response => {
     console.log(response)
 }) */
 
-/* const ads = uzLBTCsApi.ads.get().then(response => {
+/* const ads = lbtc.ads.get().then(response => {
     console.log(response)
 }) */
 
-/* const user = uzLBTCsApi.account.myself().then(response => {
+/* const user = lbtc.account.myself().then(response => {
     console.log(response)
 }) */
 
-/* const vesPrice = uzLBTCsApi.publicMarketData.adsList('sell', {
+/* const vesPrice = lbtc.publicMarketData.adsList('sell', {
     paymentMethod: 'transferwise'
 }).then(response => {
     console.log(response)
 }) */
 
 // 1.0.8
-/* const btcAverage = uzLBTCsApi.publicMarketData.bitcoinAverage('VES', '1h').then(response => {
+/* const btcAverage = lbtc.publicMarketData.bitcoinAverage('VES', '1h').then(response => {
     console.log(response)
 }) */
 
-// uzLBTCsApi.publicMarketData.adsList('sell', {
+// lbtc.publicMarketData.adsList('sell', {
 //     countryCode: 've',
 //     countryName: 'venezuela'
 // }, 2).then(response => {
 //     console.log(response)
 // })
 
-uzLBTCsApi.publicMarketData.bitcoinAverage('VES')
+// lbtc.publicMarketData.bitcoinAverage()
+//     .then(response => {
+//         console.log(response)
+//     })
+
+lbtc.publicMarketData.customBTCAvgList({ VES: '1h', COP: '6h', MXN: '12h' })
     .then(response => {
         console.log(response)
     })
-
-// uzLBTCsApi.publicMarketData.adsList('sell', { countrycode: 've', countryName: 'venezuela' }).then(response => {
-//     console.log(response)
-// })
