@@ -1,6 +1,6 @@
 # Contributing
 
-Crypto needs adoption and the goal of this tool is to help other developers build faster! If you find any bugs / issues or have suggestions, please consider collaborating. It would be greatly appreciated.
+Crypto needs adoption and the goal of this tool is to help other developers build faster! If you find any bugs / issues or have suggestions, please consider contributing. It would be greatly appreciated.
 
 When contributing to this repository, please first discuss the change you wish to make via issue,
 email, or any other method with the owners of this repository before making a change. 
@@ -17,7 +17,7 @@ Yo can also write to santiago@unizend.com and I'll be happy to help you. :-)
 
 ## Reporting Bugs/Requesting Features
 
-If you find bugs or want new features, pleas submit a new [issue](https://github.com/Rincorpes/unizend-localbtc/issues) with a clear description with the label `bug` for bugs, `invalid`, if you think it could be better in other way; or `enhancement` to request new features.
+If you find bugs or want new features, please submit a new [issue](https://github.com/Rincorpes/unizend-localbtc/issues) with a clear description with the label `bug` for bugs, `invalid`, if you think it could be better in other way; or `enhancement` to request new features.
 
 ## Pull Request Process
 
@@ -46,11 +46,18 @@ Follow the steps below to make a contribution to this tool:
          # Creat your .env file
          touch .env
 
+         # If you are using cmd on windows use the following
+         type nul > .env
+
          # Open the file with your favorite text editor and add the following
 
-         # Localbitcoins API HMAC Auth Key and Secrret
+         # Localbitcoins API HMAC Auth Key and Secret
          AUTH_KEY=<your-localbitcoins-api-hmac-auth-key>
          AUTH_SECRET=<your-localbitcoins-api-hmac-auth-secret>
+
+See the [.env example file](.env.example)
+
+To get your HMAC Auth key and secret go to your [LocalBitcoins app dashboard](https://localbitcoins.com/accounts/api/)
 
 5. Start coding
 
@@ -66,8 +73,14 @@ Then we encourage you to return the progress made to the repository.
 
 ### 3) Submit your update
          
-1. Update the README.md with details of changes to the interface, this includes new environment 
+1. Update the CHANGELOG.md with details of changes to the interface, this includes new environment 
    variables, exposed ports, useful file locations and container parameters.
+      - Add after `## [Unreleased]`
+      ```
+         ## [version using SemVer] - year-month-day
+         ### Fixed|Changed|Added|Deprecated|Removed
+            * <Your change message> By [@username](https://github.com/username)
+      ```
 2. Increase the version numbers in any examples files and the README.md to the new version that this
    Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
 3. commit your changes

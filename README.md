@@ -4,7 +4,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/rincorpes/unizend-localbtc">
-    <img src="http://unizend.com/img/unizend-logo.svg" alt="Logo" width="200" height="80">
+    <img src="http://unizend.com/images/unizend-logo.svg" alt="Logo" width="200" height="80">
   </a>
 
   <h3 align="center">Unizend's Node.js Client Library for the LocalBitcoins API</h3>
