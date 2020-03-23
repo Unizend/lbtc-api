@@ -159,7 +159,7 @@ UnizendLocalBTC.get = async (path, publicApi = false) => {
 
 	console.log('Request to ' + UnizendLocalBTC.rootUrl + path)
 
-	return res.json()
+	return (res.ok) ? res.json() : { error: { status: res.status, statusText: res.statusText } }
 }
 
 /**
@@ -642,7 +642,7 @@ UnizendLocalBTC.publicMarketData = {
 	/**
 	 * Get BTC Average price
 	 * 
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 * 
 	 * @param currency String
 	 * 	Filters result by one of the currencies supported
@@ -655,16 +655,19 @@ UnizendLocalBTC.publicMarketData = {
 	bitcoinAverage: async (currency = null, time = null) => {
 		// Declares response
 		let response
-		// Sets the pass to be used
+		// Sets the paths to be used
 		let path = 'bitcoinaverage/ticker-all-currencies/'
 
 		// Gets data from API
 		let data = await UnizendLocalBTC.get(path, true)
 
-		response = (currency) ? response = (time) ? data[currency]['avg_' + time] : data[currency] : data
+		currency = currency.toUpperCase()
+
+		response = (!data.error) ? (currency && data[currency]) ? (time) ? (data[currency]['avg_' + time]) ? data[currency]['avg_' + time] : (time === 'volume') ? data[currency].volume_btc : { error: `Invalid param "${time}"` } : data[currency] : (currency) ? { error: 'Use a valid currency' } : data : data
 
 		return response
 	},
+
 	/**
 	 * Bitcoin chars
 	 * 
