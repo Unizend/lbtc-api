@@ -71,7 +71,11 @@ lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 //         console.log(response)
 //     })
 
-lbtc.publicMarketData.customBTCAvgList({ VES: '1h', COP: '6h', MXN: '12h' })
-    .then(response => {
-        console.log(response)
-    })
+// lbtc.publicMarketData.customBTCAvgList({ VES: '1h', COP: '6h', MXN: '12h' })
+//     .then(response => {
+//         console.log(response)
+//     })
+
+lbtc.localbitcoins.getFees().then(res => {
+    console.log(res)
+})
