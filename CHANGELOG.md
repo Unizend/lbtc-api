@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2020-03-25
+### Changed
+* `params` param added to `get()` method By [@Rincorpes](https://github.com/Rincorpes)
+* `localbitcoins.getPlaces()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `close` param added to `get()` and `getUrl()` methods By [@Rincorpes](https://github.com/Rincorpes)
+* `localbitcoins.getBTCPriceFromEquation()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `localbitcoins.getFees()` method working By [@Rincorpes](https://github.com/Rincorpes)
+
+## [1.2.1] - 2020-03-25
+### Changed
+* `countryCode` param removed from `getPaymentMethod()` function By [@Rincorpes](https://github.com/Rincorpes)
+
 ## [1.2.0] - 2020-03-23
 ### Added
 * `publicMarketData.customBTCAvgList()` method to allow get custom average btc prices list By [@Rincorpes](https://github.com/Rincorpes)

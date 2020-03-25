@@ -75,14 +75,18 @@ UnizendLocalBTC.init = (key, secret) => {
  * 	The path for the request
  * @param publicApi Boolean @default false
  * 	Controls the path behavior.
+ * @param close Boolean @default true
+ * 	If true ads a "/" at the end.
+ * 	@since 1.2.4
  * 
  * @returns String | The API path
  */
-UnizendLocalBTC.parsePath = (path, publicApi = false) => {
+UnizendLocalBTC.getUrl = (path, publicApi = false, close = true) => {
 	// If true it means you are working with the public market data, so the
 	// we it will not add the '/api/' prefix.
 	// Else, it adds the prefix so there will be no errors in the paths.
-	path = (publicApi === true) ? '/' + path : '/api/' + path + '/'
+	path = (close) ? `${path}/` : `${path}`
+	path = (publicApi === true) ? '/' + path : '/api/' + path
 
 	return path
 }
@@ -147,19 +151,34 @@ UnizendLocalBTC.getHeaders = (path, params = {}) => {
  * @param publicApi Boolean @default false
  * 	When you are using the public market data from localbitcoins, the path
  * 	change a bit. For this reasson we have this var, to control that behavior.
+ * @param params Objct @default {}
+ * 	Query params
+ * 	@since 1.2.2
+ * @param close Objct @default true
+ * 	To see if the path needs a "/" at the end.
+ * 	@since 1.2.4
  * 
  * @returns Object | The localbitcoins API response
  */
-UnizendLocalBTC.get = async (path, publicApi = false) => {
+UnizendLocalBTC.get = async (path, publicApi = false, params = {}, close = true) => {
 	// gets the final path.
-	path = UnizendLocalBTC.parsePath(path, publicApi)
+	path = UnizendLocalBTC.getUrl(path, publicApi, close)
 
-	const headers = UnizendLocalBTC.getHeaders(path, {})
+	const headers = UnizendLocalBTC.getHeaders(path, params)
+
+	if (Object.keys(params).length > 0) {
+		const esc = encodeURIComponent;
+		const query = Object.keys(params)
+			.map(k => esc(k) + '=' + esc(params[k]))
+			.join('&');
+		path = `${path}?${query}`
+	}
+	
 	const res = await fetch(UnizendLocalBTC.rootUrl + path, { method: 'GET', headers })
 
 	console.log('Request to ' + UnizendLocalBTC.rootUrl + path)
 
-	return (res.ok) ? res.json() : { error: { status: res.status, statusText: res.statusText } }
+	return res.json() // (res.ok) ? res.json() : { error: { status: res.status, statusText: res.statusText } }
 }
 
 /**
@@ -175,7 +194,7 @@ UnizendLocalBTC.get = async (path, publicApi = false) => {
  * @returns Object | The localbitcoins API response
  */
 UnizendLocalBTC.post = async (path, params) => {
-	path = UnizendLocalBTC.parsePath(path)
+	path = UnizendLocalBTC.getUrl(path)
 	const headers = UnizendLocalBTC.getHeaders(path, params)
 	const res = await fetch(UnizendLocalBTC.rootUrl + path, {
 		method: 'POST',
@@ -251,12 +270,12 @@ UnizendLocalBTC.localbitcoins = {
 		return response.data.methods
 	},
 	/**
-	 * Payment methods
+	 * Get an specific payment method
 	 * 
 	 * @since 1.0.0
 	 */
-	getPaymentMethod: async (paymentMethod, countryCode = null) => {
-		let response = await UnizendLocalBTC.localbitcoins.getPaymentMethodsList(countryCode)
+	getPaymentMethod: async (paymentMethod) => {
+		let response = await UnizendLocalBTC.localbitcoins.getPaymentMethodsList()
 
 		return response[paymentMethod]
 	},
@@ -285,10 +304,11 @@ UnizendLocalBTC.localbitcoins = {
 		return response.data.currencies
 	},
 	// TODO
-	getPlaces: async () => {
+	getPlaces: async (coordinates = {}) => {
 		let path = UnizendLocalBTC.apiPaths.places
+		let response = await UnizendLocalBTC.get(path, false, coordinates)
 
-		return path
+		return response
 	},
 	/**
 	 * BTC price from equation
@@ -303,7 +323,7 @@ UnizendLocalBTC.localbitcoins = {
 
 		path = setEquation(equationString)
 
-		let response = await UnizendLocalBTC.get(path)
+		let response = await UnizendLocalBTC.get(path, false, {}, false)
 
 		return response
 	},
@@ -311,7 +331,9 @@ UnizendLocalBTC.localbitcoins = {
 	getFees: async () => {
 		let path = UnizendLocalBTC.apiPaths.fees
 
-		return path
+		let response = await UnizendLocalBTC.get(path)
+
+		return response
 	}
 }
 
@@ -617,7 +639,7 @@ UnizendLocalBTC.publicMarketData = {
 		let currency = (options.currency) ? options.currency : false
 		
 		let basePath = prefix + 'bitcoins-online'
-		let suffix = (page > 1) ? `.json?page=2` : '.json'
+		let suffix = (page  > 1) ? `.json?page=${page}` : '.json'
 
 		let path
 
