@@ -628,7 +628,7 @@ UnizendLocalBTC.publicMarketData = {
 	 * /sell-bitcoins-online/${countrycode}/${country_name}/${payment_method}/.json
 	 * /sell-bitcoins-with-cash/{location_id}/{location_slug}/.json // TODO
 	 */
-	adsList: async (action, options = {}, page) => {
+	adsList: async (action, options = {}, page = {}) => {
 		let prefix = action + '-'
 
 		//console.log(options)
@@ -639,7 +639,7 @@ UnizendLocalBTC.publicMarketData = {
 		let currency = (options.currency) ? options.currency : false
 		
 		let basePath = prefix + 'bitcoins-online'
-		let suffix = (page  > 1) ? `.json?page=${page}` : '.json'
+		let suffix = '.json'
 
 		let path
 
@@ -653,7 +653,7 @@ UnizendLocalBTC.publicMarketData = {
 
 		// console.log(page)
 
-		let response = await UnizendLocalBTC.get(path, true)
+		let response = await UnizendLocalBTC.get(path, true, page, false)
 
 		// console.log(response.pagination.next)
 
