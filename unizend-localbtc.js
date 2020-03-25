@@ -198,7 +198,7 @@ UnizendLocalBTC.post = async (path, params) => {
 	const headers = UnizendLocalBTC.getHeaders(path, params)
 	const res = await fetch(UnizendLocalBTC.rootUrl + path, {
 		method: 'POST',
-		body: querystring.stringify(payload),
+		body: querystring.stringify(params),
 		headers
 	})
 
@@ -221,15 +221,15 @@ UnizendLocalBTC.apiPaths = {
 	fees: 'fees',
 	ads: 'ads',
 	adGet: 'ad-get',
-	adUpdate: 'ad-update',
+	adUpdate: 'ad',
 	adCreate: 'ad-create',
 	adEquation: 'ad-equation',
-	adRemove: 'ad-remove',
+	adDelete: 'ad-delete',
 	feedback: 'feedback',
 	contact: 'contact_',
 	account_info: 'account_info',
 	myself: 'myself',
-	dashbord: 'dashbord',
+	dashboard: 'dashboard',
 	notifications: 'notifications',
 	recentMessages: 'recent_messages',
 	realNameVerifiers: 'real_name_verifiers',
@@ -363,36 +363,40 @@ UnizendLocalBTC.ads = {
 		return response.data.ad_list
 	},
 	// TODO
-	update: async (adId) => {
-		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.ad_update, adId)
+	update: async (adId, params) => {
+		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.adUpdate, adId)
 
 		console.log('Update an advertisement')
+		let response = await UnizendLocalBTC.post(path, params)
 
-		return path
+		return response
 	},
 	//TODO
-	create: async () => {
-		let path = UnizendLocalBTC.apiPaths.ad_create
+	create: async (params) => {
+		let path = UnizendLocalBTC.apiPaths.adCreate
 
 		console.log('Create a new advertisement')
+		let response = await UnizendLocalBTC.post(path, params)
 
-		return path
+		return response
 	},
 	// TODO
-	updateEquation: async (adId) => {
-		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.ad_equation, adId)
+	updateEquation: async (adId, params) => {
+		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.adEquation, adId)
 
 		console.log('Update equation of an advertisement')
+		let response = await UnizendLocalBTC.post(path, params)
 
-		return path
+		return response
 	},
 	//TODO
-	remove: async (adId) => {
-		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.ad_remove, adId)
+	delete: async (adId) => {
+		let path = UnizendLocalBTC.ads.setId(UnizendLocalBTC.apiPaths.adDelete, adId)
 
 		console.log('Remove an advertisement')
+		let response = await UnizendLocalBTC.post(path, {})
 
-		return path
+		return response
 	}
 }
 
@@ -502,64 +506,74 @@ UnizendLocalBTC.account = {
 		return response.data
 	},
 	// TODO
-	dashbord: {
+	dashboard: {
 		info: async () => {
-			let path = UnizendLocalBTC.apiPaths.dashbord
+			let path = UnizendLocalBTC.apiPaths.dashboard
+			let response = await UnizendLocalBTC.get(path)
 
-			return path
+			return response
 		},
 		released: async () => {
-			let path = UnizendLocalBTC.apiPaths.dashbord + '/released'
+			let path = UnizendLocalBTC.apiPaths.dashboard + '/released'
+			let response = await UnizendLocalBTC.get(path)
 
-			return path
+			return response
 		},
 		canceled: async () => {
-			let path = UnizendLocalBTC.apiPaths.dashbord + '/canceled'
+			let path = UnizendLocalBTC.apiPaths.dashboard + '/canceled'
+			let response = await UnizendLocalBTC.get(path)
 
-			return path
+			return response
 		},
 		closed: async () => {
-			let path = UnizendLocalBTC.apiPaths.dashbord + '/closed'
+			let path = UnizendLocalBTC.apiPaths.dashboard + '/closed'
+			let response = await UnizendLocalBTC.get(path)
 
-			return path
+			return response
 		}
 	},
 	// TODO
 	notifications: {
 		getList: async () => {
 			let path = UnizendLocalBTC.apiPaths.notifications
+			let response = await UnizendLocalBTC.get(path)
 
-			return path
+			return response
 		},
 		markAsRead: async (notificationId) => {
 			let path = UnizendLocalBTC.apiPaths.notifications + '/mark_as_read/' + notificationId
-
-			return path
+			let response = await UnizendLocalBTC.post(path, {})
+			
+			return response
 		}
 	},
 	// TODO
 	getRecentMsgs: async () => {
 		let path = UnizendLocalBTC.apiPaths.recentMessages
+		let response = await UnizendLocalBTC.get(path)
 
-		return path
+		return response
 	},
 	// TODO
 	getRealNameVerifiers: async (username) => {
-		let path = UnizendLocalBTC.apiPaths.real_name_verifiers + `/${username}`
+		let path = UnizendLocalBTC.apiPaths.realNameVerifiers + `/${username}`
+		let response = await UnizendLocalBTC.get(path)
 
-		return path
+		return response
 	},
 	// TODO
-	pincode: async () => {
+	pincode: async (pin) => {
 		let path = UnizendLocalBTC.apiPaths.pincode
+		let response = await UnizendLocalBTC.post(path, { pincode: pin })
 
-		return path
+		return response
 	},
 	// TODO
 	logout: async () => {
 		let path = UnizendLocalBTC.apiPaths.logout
+		let response = await UnizendLocalBTC.post(path, {})
 
-		return path
+		return response
 	}
 }
 
@@ -572,32 +586,37 @@ UnizendLocalBTC.wallet = {
 	// TODO
 	getInfo: async () => {
 		let path = UnizendLocalBTC.apiPaths.walletInfo
+		let response = await UnizendLocalBTC.get(path)
 
-		return path
+		return response
 	},
 	// TODO
 	getBalance: async () => {
 		let path = UnizendLocalBTC.apiPaths.walletBalance
+		let response = await UnizendLocalBTC.get(path)
 
-		return path
+		return response
 	},
 	// TODO
-	send: async () => {
+	send: async (params) => {
 		let path = UnizendLocalBTC.apiPaths.walletSend
+		let response = await UnizendLocalBTC.post(path, params)
 
-		return path
+		return response
 	},
 	// TODO
 	sendPin: async () => {
 		let path = UnizendLocalBTC.apiPaths.walletSendPin
+		let response = await UnizendLocalBTC.post(path, params)
 
-		return path
+		return response
 	},
 	// TODO
 	getAddr: async () => {
 		let path = UnizendLocalBTC.apiPaths.walletAddr
+		let response = await UnizendLocalBTC.post(path, {})
 
-		return path
+		return response
 	}
 }
 
