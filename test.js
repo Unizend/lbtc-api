@@ -76,6 +76,13 @@ lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 //         console.log(response)
 //     })
 
-lbtc.localbitcoins.getFees().then(res => {
-    console.log(res)
+// lbtc.localbitcoins.getFees().then(res => {
+//     console.log(res)
+// })
+
+lbtc.publicMarketData.adsList('sell', {
+    countryCode: 've',
+    countryName: 'venezuela'
+}, { page: 2 }).then(response => {
+    console.log(response)
 })
