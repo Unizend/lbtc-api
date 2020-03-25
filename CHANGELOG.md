@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.7] - 2020-03-25
+### Fixed #2
+* pagination issue fixed `get()` method By [@Rincorpes](https://github.com/Rincorpes)
+
 ## [1.2.6] - 2020-03-25
 ### Changed
 * `params` param added to `get()` method By [@Rincorpes](https://github.com/Rincorpes)
