@@ -80,9 +80,34 @@ lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 //     console.log(res)
 // })
 
-lbtc.publicMarketData.adsList('sell', {
-    countryCode: 've',
-    countryName: 'venezuela'
-}, { page: 2 }).then(response => {
-    console.log(response)
+// lbtc.publicMarketData.adsList('sell', {
+//     countryCode: 've',
+//     countryName: 'venezuela'
+// }, { page: 2 }).then(response => {
+//     console.log(response)
+// })
+
+// lbtc.ads.create({
+//     price_equation: 'btc_in_usd*USD_in_VES*1.3599999999999999',
+//     lat: 11.231970,
+//     lon: -74.200752,
+//     city: 'Santa Marta',
+//     location_string: 'Colombia',
+//     countrycode: 'co',
+//     currency: 'COP',
+//     bank_name: 'Bancolombia',
+//     account_info: '',
+//     msg: 'Este anuncio fue creado con la API de localbitcoins\r\n' + 'No oferte\r\n',
+//     sms_verification_required: false,
+//     track_max_amount: false,
+//     require_trusted_by_advertiser: true,
+//     require_identification: true,
+//     online_provider: 'CASH_DEPOSIT',
+//     trade_type: 'ONLINE_BUY'
+// }).then(res => {
+//     console.log(res)
+// })
+
+lbtc.wallet.getAddr().then(res => {
+    console.log(res)
 })

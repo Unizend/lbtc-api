@@ -6,6 +6,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.26] - 2020-03-25
+### Changed
+* `ads.create()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `ads.update()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `ads.updateEquation()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `ads.delete()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.dashboard.info()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.dashboard.released()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.dashboard.canceled()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.dashboard.closed()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.notifications.getList()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.notifications.markAsRead()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.getRecentMsgs()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.getRealNameVerifiers()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.pincode()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.logout()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.wallet.getInfo()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.wallet.getBalance()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.wallet.send()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.wallet.sendPin()` method working By [@Rincorpes](https://github.com/Rincorpes)
+* `account.wallet.getAddr()` method working By [@Rincorpes](https://github.com/Rincorpes)
+
 ## [1.2.7] - 2020-03-25
 ### Fixed #2
 * pagination issue fixed `get()` method By [@Rincorpes](https://github.com/Rincorpes)
