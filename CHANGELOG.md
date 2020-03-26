@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.2.28] - 2020-03-26
+## [1.2.29] - 2020-03-26
 ### Changed
 * Get an specific currency with the `localbitcoins.getCurrencies()` method By [@Rincorpes](https://github.com/Rincorpes)
 ### Added
 * In code documentation By [@Rincorpes](https://github.com/Rincorpes)
+### Fixed
+* Cli file issue By [@Rincorpes](https://github.com/Rincorpes)
 
 ## [1.2.26] - 2020-03-25
 ### Changed
