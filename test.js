@@ -108,6 +108,6 @@ lbtc.init(process.env.AUTH_KEY, process.env.AUTH_SECRET)
 //     console.log(res)
 // })
 
-lbtc.wallet.getAddr().then(res => {
+lbtc.localbitcoins.getPaymentMethodsList().then(res => {
     console.log(res)
 })
