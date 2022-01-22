@@ -25,7 +25,7 @@
   "homepage": "https://github.com/Rincorpes/unizend-localbtc#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "querystring": "^0.2.0",
     "request": "^2.88.0"
   }
